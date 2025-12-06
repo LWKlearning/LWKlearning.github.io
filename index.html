@@ -37,6 +37,7 @@
         transition: transform 0.3s ease;
         display: block; /* ensures the link covers the whole card */
         text-decoration: none;
+        aspect-ratio: 1 / 1; /* ensures square ratio */
     }
 
     .game-card:hover {
@@ -45,8 +46,10 @@
 
     .game-card img {
         width: 100%;
-        display: block;
+        height: 100%;
+        object-fit: cover; /* crops and fills the square without stretching */
         border-radius: 10px;
+        display: block;
     }
 
     .game-title {
@@ -69,13 +72,13 @@
 <div class="game-grid">
     <!-- Game Card -->
     <a href="https://example.com/game1" class="game-card" target="_blank">
-        <img src="https://via.placeholder.com/300x200" alt="Game 1">
+        <img src="https://via.placeholder.com/300x300" alt="Game 1">
         <div class="game-title">Game 1</div>
     </a>
 
-    <!-- Add more cards by copying the above block and changing the href, image, and title -->
+    <!-- Example: Add more cards -->
     <a href="https://example.com/game2" class="game-card" target="_blank">
-        <img src="https://via.placeholder.com/300x200" alt="Game 2">
+        <img src="https://via.placeholder.com/300x300" alt="Game 2">
         <div class="game-title">Game 2</div>
     </a>
 </div>
