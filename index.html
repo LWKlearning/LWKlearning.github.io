@@ -1,209 +1,378 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="referrer" content="no-referrer-when-downgrade" />
-    <link rel="icon" type="image/x-icon" href="/favicon.png">
-    <meta charset="UTF-8">
+<meta name="referrer" content="no-referrer-when-downgrade" />
+<link rel="icon" type="image/x-icon" href="/favicon.png">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LWK Learning</title>
+<title>LWK Learning 2.0</title>
+
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        background-color: #111;
-        color: #fff;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100vh;
-    }
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #33ff33;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
 
-    h1 {
-        margin: 20px 0;
-        font-size: 2.5em;
-    }
+/* CRT Overlay */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,255,0,0.05) 0px,
+        rgba(0,255,0,0.05) 2px,
+        transparent 2px,
+        transparent 4px
+    );
+    pointer-events: none;
+}
 
-    .game-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 20px;
-        width: 90%;
-        max-width: 1200px;
-    }
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center,
+        transparent 60%,
+        rgba(0,0,0,0.8) 100%);
+    pointer-events: none;
+}
 
-    .game-card {
-        position: relative;
-        overflow: hidden;
-        cursor: pointer;
-        border-radius: 10px;
-        transition: transform 0.3s ease;
-        display: block; /* ensures the link covers the whole card */
-        text-decoration: none;
-        aspect-ratio: 1 / 1; /* ensures square ratio */
-    }
+/* Flicker */
+@keyframes flicker {
+    0% { opacity: 0.98; }
+    50% { opacity: 1; }
+    100% { opacity: 0.97; }
+}
 
-    .game-card:hover {
-        transform: scale(1.05);
-    }
+body {
+    animation: flicker 0.15s infinite;
+}
 
-    .game-card img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover; /* crops and fills the square without stretching */
-        border-radius: 10px;
-        display: block;
-    }
+/* Title */
+h1 {
+    margin: 25px 0;
+    font-size: 2.8em;
+    text-shadow: 0 0 10px #33ff33;
+}
 
-    .game-title {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        padding: 10px;
-        background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0));
-        text-align: center;
-        font-weight: bold;
-        font-size: 1.1em;
-        color: #fff;
-    }
+/* Grid */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+    width: 90%;
+    max-width: 1200px;
+}
+
+/* Cards */
+.game-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 10px;
+    text-decoration: none;
+    aspect-ratio: 1 / 1;
+    transform: scale(0.95);
+    opacity: 0;
+    transition: 
+        transform 0.5s ease,
+        opacity 0.8s ease;
+}
+
+.game-card.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.game-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+    filter: brightness(0.85) contrast(1.1);
+}
+
+.game-title {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #33ff33;
+    text-shadow: 0 0 6px #33ff33;
+}
+
+/* Hover glow */
+.game-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #33ff33;
+}
+
+/* Page fade-out */
+.fade-out {
+    opacity: 0 !important;
+}
 </style>
 </head>
 <body>
 
-<h1>Lowk Learning</h1>
+<h1>Lowk Learning 2.0</h1>
 
 <div class="game-grid">
 
-        <a href="https://lwklearning.github.io/chat/" class="game-card" target="_blank">
-        <img src="https://github.com/LWKlearning/chat/blob/main/New%20Project%20(7).png?raw=true" alt="yapalot">
-        <div class="game-title">Chat</div>
-    </a>
-    <!-- Game Card -->
-    <a href="https://lwklearning.github.io/PPG/" class="game-card" target="_blank">
-        <img src="https://images.gog-statics.com/5ffaf8774afa96332c101594d9046271d002b90bc1e2ba1fd1ed3d4da2f8d8df.jpg" alt="People Playground">
-        <div class="game-title">People Playground</div>
-    </a>
+<!-- KEEPING YOUR CARDS EXACTLY THE SAME -->
+<!-- (Only showing first few for space — keep the rest exactly as you pasted) -->
 
-    <!-- Example: Add more cards -->
-    <a href="https://lwklearning.github.io/karlson/" class="game-card" target="_blank">
-        <img src="https://imgcdn1.nexarda.com/uploads/-/2022/1648233516-c59e1ca3e7bb010746e3f4733e30cb1d9dc8db71d221be34e67f8ee928066e87.jpg" alt="karlson">
-        <div class="game-title">Karlson</div>
-    </a>
+<!-- Chat -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/chat/">
+  <img src="https://github.com/LWKlearning/chat/blob/main/New%20Project%20(7).png?raw=true" alt="Chat">
+  <div class="game-title">Chat</div>
+</a>
 
-               <a href="https://lwklearning.github.io/MC/" class="game-card" target="_blank">
-        <img src="https://filterforge.com/filters/11635.jpg" alt="MC">
-        <div class="game-title">Minecraft</div>
-    </a> 
+<!-- People Playground -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/PPG/">
+  <img src="https://images.gog-statics.com/5ffaf8774afa96332c101594d9046271d002b90bc1e2ba1fd1ed3d4da2f8d8df.jpg" alt="People Playground">
+  <div class="game-title">People Playground</div>
+</a>
 
-    <a href="https://lwklearning.github.io/piss-tower/" class="game-card" target="_blank">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUCmfhJNu4ZIB-I7pdyNkykcWRFT4c8j5B--RoyyHjuaDZ05UAmOu2L6dsYSNZtyeg8uJc&s=10" alt="pizza tower">
-        <div class="game-title">Pizza Tower</div>
-    </a>
+<!-- Karlson -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/karlson/">
+  <img src="https://imgcdn1.nexarda.com/uploads/-/2022/1648233516-c59e1ca3e7bb010746e3f4733e30cb1d9dc8db71d221be34e67f8ee928066e87.jpg" alt="Karlson">
+  <div class="game-title">Karlson</div>
+</a>
 
-    <a href="https://lwklearning.github.io/ultraoof/" class="game-card" target="_blank">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_YBJHxGHj-s2ZVTlA7JVpaYveWuvhmUKAIg&s" alt="ultrakill">
-        <div class="game-title">Ultrakill</div>
+<!-- Minecraft -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/MC/">
+  <img src="https://filterforge.com/filters/11635.jpg" alt="Minecraft">
+  <div class="game-title">Minecraft</div>
+</a>
 
-    <a href="https://lwklearning.github.io/raft/" class="game-card" target="_blank">
-        <img src="https://store-images.s-microsoft.com/image/apps.17462.14102062639781722.573266e7-686b-44fb-9e48-a2585bc2170f.951859b9-7b83-401e-8a0b-a6626a3679ac?q=90&w=480&h=270" alt="raft">
-        <div class="game-title">Raft</div>
-  </a>
-        
-        <a href="https://lwklearning.github.io/getting-over-it/" class="game-card" target="_blank">
-        <img src="https://sm.ign.com/ign_ap/cover/g/getting-ov/getting-over-it-with-bennett-foddy_3bxh.jpg" alt="getting over it">
-        <div class="game-title">Getting Over It</div>
-    </a>
+<!-- Pizza Tower -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/piss-tower/">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUCmfhJNu4ZIB-I7pdyNkykcWRFT4c8j5B--RoyyHjuaDZ05UAmOu2L6dsYSNZtyeg8uJc&s=10" alt="Pizza Tower">
+  <div class="game-title">Pizza Tower</div>
+</a>
 
-            <a href="https://lwklearning.github.io/tattletail/" class="game-card" target="_blank">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVLfgGq_X4NDjtdY1U3AM5nmJonWcfG8PC5w&s" alt="tattletail">
-        <div class="game-title">Tattletail</div>
-    </a>
+<!-- Ultrakill -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/ultraoof/">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_YBJHxGHj-s2ZVTlA7JVpaYveWuvhmUKAIg&s" alt="Ultrakill">
+  <div class="game-title">Ultrakill</div>
+</a>
 
-                <a href="https://lwklearning.github.io/baldiremaster/" class="game-card" target="_blank">
-        <img src="https://images.gamebanana.com/img/ss/wips/6771a512c6655.jpg" alt="baldi classic remaster">
-        <div class="game-title">Baldi's Basics Classic Remastered</div>
-    </a>
+<!-- Raft -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/raft/">
+  <img src="https://store-images.s-microsoft.com/image/apps.17462.14102062639781722.573266e7-686b-44fb-9e48-a2585bc2170f.951859b9-7b83-401e-8a0b-a6626a3679ac?q=90&w=480&h=270" alt="Raft">
+  <div class="game-title">Raft</div>
+</a>
 
-                <a href="https://lwklearning.github.io/baldiplus/" class="game-card" target="_blank">
-        <img src="https://images.gamebanana.com/img/ss/mods/6664f1a170ae0.jpg" alt="baldi boi">
-        <div class="game-title">Baldi's Basics Plus</div>
-    </a>
-        
-                <a href="https://lwklearning.github.io/bendy/" class="game-card" target="_blank">
-        <img src="https://cdn1.epicgames.com/spt-assets/0b1283e5bfa64ad48f3862b79abc20b9/bendy-and-the-ink-machine-1e8cj.png" alt="Bendy And The Ink Machine">
-        <div class="game-title">Bendy And The Ink Machine</div>
-    </a>
-                
-                <a href="https://lwklearning.github.io/fnaf1/" class="game-card" target="_blank">
-        <img src="https://i1.sndcdn.com/artworks-000186525762-g43ff0-t500x500.jpg" alt="FnaF 1">
-        <div class="game-title">FnaF 1</div>
-    </a>
-                
-                <a href="https://lwklearning.github.io/fnaf2/" class="game-card" target="_blank">
-        <img src="https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_switch_download_software_1/H2x1_NSwitchDS_FiveNightsAtFreddys2_image1600w.jpg" alt="fnaf 2">
-        <div class="game-title">FnaF 2</div>
-    </a>
-                
-                <a href="https://lwklearning.github.io/fnaf3/" class="game-card" target="_blank">
-        <img src="https://www3.minijuegosgratis.com/v3/games/thumbnails/209692_1.jpg" alt="fnaf 3">
-        <div class="game-title">FnaF 3</div>
-    </a>
-                
-                <a href="https://lwklearning.github.io/fnaf4/" class="game-card" target="_blank">
-        <img src="https://geometry-game.io/data/image/game/five-nights-at-freddy-s-4/five-nights-at-freddy-s-4.png" alt="fnaf 4">
-        <div class="game-title">FnaF 4</div>
-    </a> 
-                        <a href="https://lwklearning.github.io/sl/" class="game-card" target="_blank">
-        <img src="https://img.itch.zone/aW1nLzkzNjI0NjQuanBn/315x250%23c/MdvLBo.jpg" alt="sistahh!">
-        <div class="game-title">Sister Location</div>
-    </a>
-                                <a href="https://lwklearning.github.io/world/" class="game-card" target="_blank">
-        <img src="https://cdn.jsdelivr.net/gh/gn-math/covers@main/190.png" alt="world!">
-        <div class="game-title">FnaF World</div>
-    </a>
-                        <a href="https://lwklearning.github.io/ucn/" class="game-card" target="_blank">
-        <img src="https://www5.minijuegosgratis.com/v3/games/thumbnails/240344_7_sq.jpg" alt="ultimate thing">
-        <div class="game-title">Ultimate Custom Night</div>
-    </a>  
-                                <a href="https://lwklearning.github.io/granny/" class="game-card" target="_blank">
-        <img src="https://cdn.jsdelivr.net/gh/gn-math/covers@main/90.png" alt="granny">
-        <div class="game-title">Granny</div>
-    </a>      
+<!-- Getting Over It -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/getting-over-it/">
+  <img src="https://sm.ign.com/ign_ap/cover/g/getting-ov/getting-over-it-with-bennett-foddy_3bxh.jpg" alt="Getting Over It">
+  <div class="game-title">Getting Over It</div>
+</a>
 
-                        <a href="https://lwklearning.github.io/half-life/" class="game-card" target="_blank">
-        <img src="https://assets-prd.ignimgs.com/2022/01/26/half-life-generic-1643168587518.jpg?crop=1%3A1%2Csmart&width=348&height=348&format=jpg&auto=webp&quality=80" alt="half life">
-        <div class="game-title">Half Life</div>
-    </a>    
+<!-- Tattletail -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/tattletail/">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVLfgGq_X4NDjtdY1U3AM5nmJonWcfG8PC5w&s" alt="Tattletail">
+  <div class="game-title">Tattletail</div>
+</a>
 
-   <a href="https://lwklearning.github.io/MGS/" class="game-card" target="_blank">
-        <img src="https://gaming-cdn.com/images/news/articles/1556/cover/1000x563/konami-doesn-t-rule-out-further-metal-gear-solid-remakes-cover647709c9b6371.jpg" alt="metal gear solid">
-        <div class="game-title">Metal Gear Solid</div>
-    </a>    
+<!-- Baldi Remaster -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/baldiremaster/">
+  <img src="https://images.gamebanana.com/img/ss/wips/6771a512c6655.jpg" alt="Baldi Remaster">
+  <div class="game-title">Baldi's Basics Classic Remastered</div>
+</a>
 
-       <a href="https://lwklearning.github.io/HW/" class="game-card" target="_blank">
-        <img src="https://candyclicker.io/upload/imgs/geometry-dash-lite.jpg" alt="hehe">
-        <div class="game-title">Geometry Dash Lite</div>
-    </a>    
+<!-- Baldi Plus -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/baldiplus/">
+  <img src="https://images.gamebanana.com/img/ss/mods/6664f1a170ae0.jpg" alt="Baldi Plus">
+  <div class="game-title">Baldi's Basics Plus</div>
+</a>
 
-           <a href="https://lwklearning.github.io/sh/" class="game-card" target="_blank">
-        <img src="https://e.snmc.io/lk/g/x/9da523aabcbcbba94248c7948151ff40/5280561" alt="superhot">
-        <div class="game-title">SuperHot</div>
-    </a>    
-                   <a href="https://lwklearning.github.io/bit/" class="game-card" target="_blank">
-        <img src="https://bitlife-game.io/data/image/game/bitlife-game.jpg" alt="life bit">
-        <div class="game-title">LifeBit</div>
-    </a>  
-                         <a href="https://lwklearning.github.io/slim/" class="game-card" target="_blank">
-        <img src="https://aqlsbp_qyzytrp3ca09x.c.websim.com/SlimeRancher.png" alt="raanching">
-        <div class="game-title">Slime Rancher</div>
-    </a>  
+<!-- Bendy -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/bendy/">
+  <img src="https://cdn1.epicgames.com/spt-assets/0b1283e5bfa64ad48f3862b79abc20b9/bendy-and-the-ink-machine-1e8cj.png" alt="Bendy">
+  <div class="game-title">Bendy And The Ink Machine</div>
+</a>
 
-                                 <a href="https://lwklearning.github.io/rigid/" class="game-card" target="_blank">
-        <img src="https://raw.githubusercontent.com/LWKlearning/LWKlearning.github.io/e6dff357d36e10bcda5baecd0cbc14e04a44315f/Screenshot%202025-12-21%20233612.svg" alt="raging rigidly">
-        <div class="game-title">RigidRAGE v4</div>
-    </a>
+<!-- FNaF 1 -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/fnaf1/">
+  <img src="https://i1.sndcdn.com/artworks-000186525762-g43ff0-t500x500.jpg" alt="FNaF 1">
+  <div class="game-title">FNaF 1</div>
+</a>
+
+<!-- FNaF 2 -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/fnaf2/">
+  <img src="https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_switch_download_software_1/H2x1_NSwitchDS_FiveNightsAtFreddys2_image1600w.jpg" alt="FNaF 2">
+  <div class="game-title">FNaF 2</div>
+</a>
+
+<!-- FNaF 3 -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/fnaf3/">
+  <img src="https://www3.minijuegosgratis.com/v3/games/thumbnails/209692_1.jpg" alt="FNaF 3">
+  <div class="game-title">FNaF 3</div>
+</a>
+
+<!-- FNaF 4 -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/fnaf4/">
+  <img src="https://geometry-game.io/data/image/game/five-nights-at-freddy-s-4/five-nights-at-freddy-s-4.png" alt="FNaF 4">
+  <div class="game-title">FNaF 4</div>
+</a>
+
+<!-- Sister Location -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/sl/">
+  <img src="https://img.itch.zone/aW1nLzkzNjI0NjQuanBn/315x250%23c/MdvLBo.jpg" alt="Sister Location">
+  <div class="game-title">Sister Location</div>
+</a>
+
+<!-- FNaF World -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/world/">
+  <img src="https://cdn.jsdelivr.net/gh/gn-math/covers@main/190.png" alt="FNaF World">
+  <div class="game-title">FNaF World</div>
+</a>
+
+<!-- Ultimate Custom Night -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/ucn/">
+  <img src="https://www5.minijuegosgratis.com/v3/games/thumbnails/240344_7_sq.jpg" alt="Ultimate Custom Night">
+  <div class="game-title">Ultimate Custom Night</div>
+</a>
+
+<!-- Granny -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/granny/">
+  <img src="https://cdn.jsdelivr.net/gh/gn-math/covers@main/90.png" alt="Granny">
+  <div class="game-title">Granny</div>
+</a>
+
+<!-- Half-Life -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/half-life/">
+  <img src="https://assets-prd.ignimgs.com/2022/01/26/half-life-generic-1643168587518.jpg?crop=1%3A1%2Csmart&width=348&height=348&format=jpg&auto=webp&quality=80" alt="Half-Life">
+  <div class="game-title">Half Life</div>
+</a>
+
+<!-- Metal Gear Solid -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/MGS/">
+  <img src="https://gaming-cdn.com/images/news/articles/1556/cover/1000x563/konami-doesn-t-rule-out-further-metal-gear-solid-remakes-cover647709c9b6371.jpg" alt="Metal Gear Solid">
+  <div class="game-title">Metal Gear Solid</div>
+</a>
+
+<!-- Geometry Dash Lite -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/HW/">
+  <img src="https://candyclicker.io/upload/imgs/geometry-dash-lite.jpg" alt="Geometry Dash Lite">
+  <div class="game-title">Geometry Dash Lite</div>
+</a>
+
+<!-- SuperHot -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/sh/">
+  <img src="https://e.snmc.io/lk/g/x/9da523aabcbcbba94248c7948151ff40/5280561" alt="SuperHot">
+  <div class="game-title">SuperHot</div>
+</a>
+
+<!-- LifeBit -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/bit/">
+  <img src="https://bitlife-game.io/data/image/game/bitlife-game.jpg" alt="LifeBit">
+  <div class="game-title">LifeBit</div>
+</a>
+
+<!-- Slime Rancher -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/slim/">
+  <img src="https://aqlsbp_qyzytrp3ca09x.c.websim.com/SlimeRancher.png" alt="Slime Rancher">
+  <div class="game-title">Slime Rancher</div>
+</a>
+
+<!-- RigidRAGE v4 -->
+<a href="javascript:void(0)" class="game-card" data-url="https://super-field-2580.maxandbudzhaha.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/rigid/">
+  <img src="https://raw.githubusercontent.com/LWKlearning/LWKlearning.github.io/e6dff357d36e10bcda5baecd0cbc14e04a44315f/Screenshot%202025-12-21%20233612.svg" alt="RigidRAGE v4">
+  <div class="game-title">RigidRAGE v4</div>
+</a>
+
+
+<!-- ⬇️ KEEP ALL YOUR OTHER GAME CARDS HERE UNCHANGED ⬇️ -->
+
 </div>
 
+<script>
+/* Page fade-in */
+window.addEventListener("load", () => {
+    document.body.style.opacity = "1";
+});
 
-</div>
+/* Fade-out when leaving page */
+document.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", function(e) {
+        if (this.target === "_blank") return;
+        e.preventDefault();
+        document.body.classList.add("fade-out");
+        setTimeout(() => {
+            window.location = this.href;
+        }, 500);
+    });
+});
+
+/* Fade in/out on scroll */
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        } else {
+            entry.target.classList.remove("visible");
+        }
+    });
+}, { threshold: 0.15 });
+
+document.querySelectorAll(".game-card").forEach(card => {
+    observer.observe(card);
+});
+</script>
+<script>
+    export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+
+    let target = url.searchParams.get("url");
+    if (!target) {
+      return new Response("Missing ?url parameter", { status: 400 });
+    }
+
+    // Decode repeatedly in case it's double-encoded
+    try {
+      let prev;
+      do {
+        prev = target;
+        target = decodeURIComponent(target);
+      } while (prev !== target);
+    } catch {
+      return new Response("Invalid URL encoding", { status: 400 });
+    }
+
+    // Basic safety check
+    if (!/^https?:\/\//i.test(target)) {
+      return new Response("Invalid target URL", { status: 400 });
+    }
+
+    return Response.redirect(target, 302);
+  }
+};
+</script>
+<script>
+    document.querySelectorAll('.game-card').forEach(card => {
+    card.addEventListener('click', () => {
+        window.location.href = card.dataset.url;
+    });
+});
+
+</script>
 </body>
 </html>
