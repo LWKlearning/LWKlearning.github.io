@@ -411,7 +411,7 @@ ${err}
     });
 });
 </script>
-    <script>
+<script>
 (function () {
     if (window.__LWK_UNRESTRICTOR_LOADED__) return;
     window.__LWK_UNRESTRICTOR_LOADED__ = true;
@@ -419,6 +419,7 @@ ${err}
     function boot() {
         const WORKER = "https://bitter-sky-bb87.maxhaxapphelp.workers.dev?url=";
 
+        // --- Styles ---
         const style = document.createElement("style");
         style.textContent = `
 #lwk-unrestrictor-btn {
@@ -471,21 +472,16 @@ ${err}
     padding: 8px;
     border-bottom: 2px solid #00aaff;
 }
-#lwk-unrestrictor-input {
-    flex: 1;
+#lwk-unrestrictor-bar button,
+#lwk-unrestrictor-bar input {
     background: black;
     color: #00aaff;
     border: 2px solid #00aaff;
     font: 18px Courier New, monospace;
-    padding: 6px;
-}
-#lwk-unrestrictor-bar button {
-    background: black;
-    color: #00aaff;
-    border: 2px solid #00aaff;
-    font: 18px Courier New, monospace;
-    cursor: pointer;
     padding: 6px 12px;
+}
+#lwk-unrestrictor-bar input {
+    flex: 1;
 }
 #lwk-unrestrictor-frame {
     flex: 1;
@@ -525,15 +521,19 @@ ${err}
         `;
         document.head.appendChild(style);
 
+        // --- Main button ---
         const btn = document.createElement("button");
         btn.id = "lwk-unrestrictor-btn";
         btn.innerHTML = `<img src="https://github.com/LWKlearning/bart/blob/main/image%20(15).png?raw=true">`;
 
+        // --- Overlay with iframe & controls ---
         const overlay = document.createElement("div");
         overlay.id = "lwk-unrestrictor-overlay";
         overlay.innerHTML = `
 <div id="lwk-unrestrictor-window">
     <div id="lwk-unrestrictor-bar">
+        <button id="lwk-unrestrictor-fullscreen">⛶</button>
+        <button id="lwk-unrestrictor-newtab">↗</button>
         <input id="lwk-unrestrictor-input" placeholder="example.com">
         <button id="lwk-unrestrictor-go">Go</button>
         <button id="lwk-unrestrictor-close">✕</button>
@@ -545,8 +545,19 @@ ${err}
         document.body.appendChild(btn);
         document.body.appendChild(overlay);
 
-        const normalize = (u) => u.startsWith("http") ? u : "https://" + u;
-        const frame = overlay.querySelector("#lwk-unrestrictor-frame");
+        let frame = overlay.querySelector("#lwk-unrestrictor-frame");
+
+        const normalize = u => u.startsWith("http") ? u : "https://" + u;
+
+        function resetFrame() {
+            const f = document.createElement("iframe");
+            f.id = "lwk-unrestrictor-frame";
+            f.style.flex = "1";
+            f.style.border = "none";
+            f.style.background = "black";
+            frame.replaceWith(f);
+            frame = f;
+        }
 
         function showBartPlaceholder() {
             const doc = frame.contentDocument || frame.contentWindow.document;
@@ -556,10 +567,7 @@ ${err}
 <body style="margin:0; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:#00aaff; font-family:Courier New, monospace; text-align:center;">
 <img src="https://github.com/LWKlearning/bart/blob/main/image%20(15).png?raw=true" style="max-width:200px; margin-bottom:20px;">
 <div>Type in a URL, Press Go,<br>and I will show it to you!</div>
-<div>‎ </div>
-<div>‎ </div>
-<div>‎ </div>
-<div>‎ </div>
+<div>‎ </div><div>‎ </div><div>‎ </div><div>‎ </div>
 <div>‎For some reason, you have to reload between uses of this proxy whenever it is closed, mild apologies!</div>
 </body>
 </html>
@@ -567,22 +575,28 @@ ${err}
             doc.close();
         }
 
+        // --- Open overlay ---
         btn.onclick = () => {
             overlay.style.display = "block";
+            resetFrame();
             showBartPlaceholder();
         };
 
+        // --- Close overlay ---
         overlay.querySelector("#lwk-unrestrictor-close").onclick = () => {
             overlay.style.display = "none";
             overlay.querySelector("#lwk-unrestrictor-input").value = "";
-            frame.src = "about:blank";
+            resetFrame();
         };
 
+        // --- Go button ---
         overlay.querySelector("#lwk-unrestrictor-go").onclick = async () => {
             const input = overlay.querySelector("#lwk-unrestrictor-input").value.trim();
             if (!input) return;
 
+            resetFrame();
             const doc = frame.contentDocument || frame.contentWindow.document;
+
             doc.open();
             doc.write("<pre style='color:#00aaff;font-family:monospace;'>Loading...</pre>");
             doc.close();
@@ -603,7 +617,29 @@ ${err}
             }
         };
 
-        // --- BART chat bubble on page load ---
+        // --- Fullscreen only iframe ---
+        overlay.querySelector("#lwk-unrestrictor-fullscreen").onclick = () => {
+            if (!document.fullscreenElement) frame.requestFullscreen().catch(() => {});
+            else document.exitFullscreen().catch(() => {});
+        };
+
+        // --- Single-shot new tab mirror ---
+        overlay.querySelector("#lwk-unrestrictor-newtab").onclick = () => {
+            const newTab = window.open("about:blank", "_blank");
+            if (!newTab) return;
+            try {
+                const html = frame.contentDocument.documentElement.outerHTML;
+                newTab.document.open();
+                newTab.document.write(html);
+                newTab.document.close();
+            } catch {
+                newTab.document.open();
+                newTab.document.write("<pre style='color:#00aaff;background:black;'>Mirror failed</pre>");
+                newTab.document.close();
+            }
+        };
+
+        // --- BART bubble ---
         (function showBartBubble() {
             if (window.__LWK_BART_BUBBLE_SHOWN__) return;
             window.__LWK_BART_BUBBLE_SHOWN__ = true;
@@ -644,14 +680,10 @@ ${err}
                 setTimeout(() => b.remove(), 500);
             }
         })();
-
     }
 
-    if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", boot);
-    } else {
-        boot();
-    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+    else boot();
 })();
 </script>
 </body>
