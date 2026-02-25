@@ -380,32 +380,34 @@ document.querySelectorAll(".game-card").forEach(card => {
 </script>
 <script>
 document.querySelectorAll('.game-card').forEach(card => {
-    card.addEventListener('click', async () => {
-        const targetUrl = card.dataset.url;
+    card.addEventListener('click', () => {
 
-        // Popup-safe blank tab
+        // Open blank tab synchronously (popup-safe)
         const win = window.open('about:blank', '_blank');
         if (!win) return;
 
-        try {
-            const proxied = 
-              "https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=" +
-              encodeURIComponent(targetUrl);
+        // Build proxy URL plainly
+        const proxyUrl =
+            "https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=" +
+            card.dataset.url;
 
-            const res = await fetch(proxied);
-            const html = await res.text();
-
-            win.document.open();
-            win.document.write(html);
-            win.document.close();
-
-        } catch (e) {
-            win.document.open();
-            win.document.write(
-              `<pre style="background:black;color:#33ff33">LOAD FAILED\n${e}</pre>`
-            );
-            win.document.close();
-        }
+        fetch(proxyUrl)
+            .then(res => res.text())
+            .then(html => {
+                win.document.open();
+                win.document.write(html);
+                win.document.close();
+            })
+            .catch(err => {
+                win.document.open();
+                win.document.write(`
+                    <pre style="background:black;color:#33ff33;font-family:monospace;">
+LOAD FAILED
+${err}
+                    </pre>
+                `);
+                win.document.close();
+            });
     });
 });
 </script>
