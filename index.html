@@ -416,5 +416,248 @@ ${err}
     });
 });
 </script>
+    <script>
+(function () {
+    if (window.__LWK_UNRESTRICTOR_LOADED__) return;
+    window.__LWK_UNRESTRICTOR_LOADED__ = true;
+
+    function boot() {
+        const WORKER = "https://bitter-sky-bb87.maxhaxapphelp.workers.dev?url=";
+
+        const style = document.createElement("style");
+        style.textContent = `
+#lwk-unrestrictor-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: black;
+    border: 3px solid #00aaff;
+    cursor: pointer;
+    z-index: 2147483647;
+    padding: 0;
+}
+#lwk-unrestrictor-btn img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+#lwk-dev-hint {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    max-width: 200px;
+    color: #00aaff;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    opacity: 0.35;
+    pointer-events: none;
+}
+#lwk-unrestrictor-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.96);
+    z-index: 2147483646;
+    display: none;
+}
+#lwk-unrestrictor-window {
+    position: absolute;
+    inset: 5%;
+    border: 3px solid #00aaff;
+    display: flex;
+    flex-direction: column;
+    background: black;
+}
+#lwk-unrestrictor-bar {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    border-bottom: 2px solid #00aaff;
+}
+#lwk-unrestrictor-input {
+    flex: 1;
+    background: black;
+    color: #00aaff;
+    border: 2px solid #00aaff;
+    font: 18px Courier New, monospace;
+    padding: 6px;
+}
+#lwk-unrestrictor-bar button {
+    background: black;
+    color: #00aaff;
+    border: 2px solid #00aaff;
+    font: 18px Courier New, monospace;
+    cursor: pointer;
+    padding: 6px 12px;
+}
+#lwk-unrestrictor-frame {
+    flex: 1;
+    border: none;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00aaff;
+    font-family: "Courier New", monospace;
+    font-size: 28px;
+    text-align: center;
+}
+#lwk-bart-bubble {
+    position: fixed;
+    max-width: 220px;
+    background: #00aaff;
+    color: #000;
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.5);
+    z-index: 2147483648;
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+}
+#lwk-bart-bubble-arrow {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent transparent #00aaff;
+}
+        `;
+        document.head.appendChild(style);
+
+        const btn = document.createElement("button");
+        btn.id = "lwk-unrestrictor-btn";
+        btn.innerHTML = `<img src="https://github.com/LWKlearning/bart/blob/main/image%20(15).png?raw=true">`;
+
+        const overlay = document.createElement("div");
+        overlay.id = "lwk-unrestrictor-overlay";
+        overlay.innerHTML = `
+<div id="lwk-unrestrictor-window">
+    <div id="lwk-unrestrictor-bar">
+        <input id="lwk-unrestrictor-input" placeholder="example.com">
+        <button id="lwk-unrestrictor-go">Go</button>
+        <button id="lwk-unrestrictor-close">✕</button>
+    </div>
+    <div id="lwk-dev-hint">Hint: typing D‑E‑V in any page unlocks developer tools on any page related to lwklearning (including pages you open with BART Unrestrictor!)</div>
+    <iframe id="lwk-unrestrictor-frame"></iframe>
+</div>`;
+
+        document.body.appendChild(btn);
+        document.body.appendChild(overlay);
+
+        const normalize = (u) => u.startsWith("http") ? u : "https://" + u;
+        const frame = overlay.querySelector("#lwk-unrestrictor-frame");
+
+        function showBartPlaceholder() {
+            const doc = frame.contentDocument || frame.contentWindow.document;
+            doc.open();
+            doc.write(`
+<html style="background:black;">
+<body style="margin:0; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:#00aaff; font-family:Courier New, monospace; text-align:center;">
+<img src="https://github.com/LWKlearning/bart/blob/main/image%20(15).png?raw=true" style="max-width:200px; margin-bottom:20px;">
+<div>Type in a URL, Press Go,<br>and I will show it to you!</div>
+<div>‎ </div>
+<div>‎ </div>
+<div>‎ </div>
+<div>‎ </div>
+<div>‎For some reason, you have to reload between uses of this proxy whenever it is closed, mild apologies!</div>
+</body>
+</html>
+            `);
+            doc.close();
+        }
+
+        btn.onclick = () => {
+            overlay.style.display = "block";
+            showBartPlaceholder();
+        };
+
+        overlay.querySelector("#lwk-unrestrictor-close").onclick = () => {
+            overlay.style.display = "none";
+            overlay.querySelector("#lwk-unrestrictor-input").value = "";
+            frame.src = "about:blank";
+        };
+
+        overlay.querySelector("#lwk-unrestrictor-go").onclick = async () => {
+            const input = overlay.querySelector("#lwk-unrestrictor-input").value.trim();
+            if (!input) return;
+
+            const doc = frame.contentDocument || frame.contentWindow.document;
+            doc.open();
+            doc.write("<pre style='color:#00aaff;font-family:monospace;'>Loading...</pre>");
+            doc.close();
+
+            try {
+                const res = await fetch(
+                    WORKER + encodeURIComponent(normalize(input)),
+                    { method: "GET", referrerPolicy: "no-referrer", credentials: "omit" }
+                );
+                const html = await res.text();
+                doc.open();
+                doc.write(html);
+                doc.close();
+            } catch (e) {
+                doc.open();
+                doc.write(`<pre style="color:#00aaff;">LOAD FAILED\n${e}</pre>`);
+                doc.close();
+            }
+        };
+
+        // --- BART chat bubble on page load ---
+        (function showBartBubble() {
+            if (window.__LWK_BART_BUBBLE_SHOWN__) return;
+            window.__LWK_BART_BUBBLE_SHOWN__ = true;
+
+            const quotes = [
+                "Hey! I can 'Unrestrict' that site you want!",
+                "Wanna go to something fun? I can Unrestrict it 😎",
+                "Need some Unrestricted sites? BART can totally do that!",
+                "I see you wanting something you cant access, i can provide it!",
+                "With my Unrestrictor magic, ANY page is just a click away!"
+            ];
+            const quote = quotes[Math.floor(Math.random() * quotes.length)];
+
+            const bubble = document.createElement("div");
+            bubble.id = "lwk-bart-bubble";
+            bubble.textContent = quote;
+
+            const arrow = document.createElement("div");
+            arrow.id = "lwk-bart-bubble-arrow";
+            bubble.appendChild(arrow);
+
+            document.body.appendChild(bubble);
+
+            requestAnimationFrame(() => {
+                const rect = btn.getBoundingClientRect();
+                bubble.style.left = (rect.left - bubble.offsetWidth - 10) + "px";
+                bubble.style.top = rect.top + "px";
+                bubble.style.opacity = "1";
+                bubble.style.transform = "translateY(-10px)";
+            });
+
+            bubble.onclick = () => fadeBubble(bubble);
+            setTimeout(() => fadeBubble(bubble), 8000);
+
+            function fadeBubble(b) {
+                b.style.opacity = "0";
+                b.style.transform = "translateY(0)";
+                setTimeout(() => b.remove(), 500);
+            }
+        })();
+
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", boot);
+    } else {
+        boot();
+    }
+})();
+</script>
 </body>
 </html>
