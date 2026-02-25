@@ -379,12 +379,33 @@ document.querySelectorAll(".game-card").forEach(card => {
 };
 </script>
 <script>
-    document.querySelectorAll('.game-card').forEach(card => {
-    card.addEventListener('click', () => {
-        window.location.href = card.dataset.url;
+document.querySelectorAll('.game-card').forEach(card => {
+    card.addEventListener('click', async () => {
+        const url = card.dataset.url;
+
+        // Open a blank tab immediately (avoids popup blockers)
+        const newTab = window.open('about:blank', '_blank');
+        if (!newTab) return;
+
+        try {
+            const res = await fetch(url, { credentials: 'include' });
+            const html = await res.text();
+
+            newTab.document.open();
+            newTab.document.write(html);
+            newTab.document.close();
+        } catch (err) {
+            newTab.document.open();
+            newTab.document.write(`
+                <pre style="background:black;color:#33ff33;font-family:monospace;">
+LOAD FAILED
+${err}
+                </pre>
+            `);
+            newTab.document.close();
+        }
     });
 });
-
 </script>
 </body>
 </html>
