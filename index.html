@@ -73,6 +73,49 @@ h1 {
     max-width: 1200px;
 }
 
+/* Cards2 */
+.game-card2 {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 10px;
+    text-decoration: none;
+    aspect-ratio: 1 / 1;
+    transform: scale(0.95);
+    opacity: 0;
+    transition: 
+        transform 0.5s ease,
+        opacity 0.8s ease;
+}
+
+.game-card2.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.game-card2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+    filter: brightness(0.85) contrast(1.1);
+}
+
+.game-title2 {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #33ff33;
+    text-shadow: 0 0 6px #33ff33;
+}
+
+
 /* Cards */
 .game-card {
     position: relative;
@@ -142,18 +185,20 @@ h1 {
   <div class="game-title">Chat</div>
 </a>
 
+
+<!-- Backups -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/backups/">
+ <img src="https://github.com/LWKlearning/LWKlearning.github.io/blob/main/New%20Project%20(23).png?raw=true" alt="Backups">
+  <div class="game-title">backup links</div>
+</a>
+
+    
 <!-- People Playground -->
 <a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/PPG/">
   <img src="https://images.gog-statics.com/5ffaf8774afa96332c101594d9046271d002b90bc1e2ba1fd1ed3d4da2f8d8df.jpg" alt="People Playground">
   <div class="game-title">People Playground</div>
 </a>
 
-    
-<!-- Shell Shockers -->
-<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/shell/">
-  <img src="https://azgames.io/upload/imgs/shell-shockers.jpg" alt="Shell Shockers">
-  <div class="game-title">[NEW] Shell Shockers</div>
-</a>
     
 <!-- Karlson -->
 <a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/karlson/">
