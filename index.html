@@ -21,6 +21,26 @@
 
 <div id="intro-video-wrapper">
   <style>
+    #feedback-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+    z-index: 2147483647; display: none; align-items: center; justify-content: center;
+}
+#feedback-window {
+    width: 90%; max-width: 500px; background: #000; border: 3px solid #33ff33;
+    padding: 20px; box-shadow: 0 0 20px #33ff33; font-family: monospace;
+}
+.feedback-header { font-size: 1.5em; margin-bottom: 15px; text-align: center; text-shadow: 0 0 5px #33ff33; }
+.feedback-input, .feedback-type {
+    width: 100%; background: #000; border: 2px solid #33ff33; color: #33ff33;
+    padding: 10px; margin-bottom: 15px; font-family: monospace; box-sizing: border-box;
+}
+.feedback-input { height: 120px; resize: none; }
+.feedback-btn {
+    width: 100%; padding: 10px; background: #33ff33; color: #000;
+    border: none; font-weight: bold; cursor: pointer; font-family: monospace;
+}
+.feedback-btn:hover { background: #fff; box-shadow: 0 0 10px #fff; }
+    
     #intro-video-overlay {
       position: fixed;
       top: 0; left: 0;
@@ -243,7 +263,22 @@ h1 {
 </style>
 </head>
 <body>
+<div id="feedback-overlay">
+  <div id="feedback-window">
+    <div class="feedback-header">SYSTEM_FEEDBACK</div>
+    <select id="fb-type" class="feedback-type">
+      <option value="REQUEST">GAME_REQUEST</option>
+      <option value="BUG">BUG_REPORT</option>
+      <option value="VIBE">SHOUTOUT</option>
+    </select>
+    <textarea id="fb-text" class="feedback-input" placeholder="Enter report data..."></textarea>
+    <button id="fb-send" class="feedback-btn">EXECUTE_SEND</button>
+    <button id="fb-close" class="feedback-btn" style="background:transparent; color:#33ff33; margin-top:10px;">CANCEL</button>
+  </div>
+</div>
+  
 
+  
 <h1>Lowk Learning 2.0</h1>
 
 <div class="game-grid">
@@ -251,6 +286,12 @@ h1 {
 <!-- KEEPING YOUR CARDS EXACTLY THE SAME -->
 <!-- (Only showing first few for space — keep the rest exactly as you pasted) -->
 
+<!-- feedback -->  
+  <a href="javascript:void(0)" class="game-card" id="open-feedback-trigger">
+  <img src="https://github.com/LWKlearning/LWKlearning.github.io/blob/main/New%20Project%20(23).png?raw=true" alt="Feedback">
+  <div class="game-title">Submit Feedback</div>
+</a>
+  
 <!-- Chat -->
 <a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/chat/">
   <img src="https://github.com/LWKlearning/chat/blob/main/New%20Project%20(7).png?raw=true" alt="Chat">
@@ -887,6 +928,49 @@ ${err}
         }
     }, 1000);
 })();
+    (function() {
+    const overlay = document.getElementById('feedback-overlay');
+    const trigger = document.getElementById('open-feedback-trigger');
+    const sendBtn = document.getElementById('fb-send');
+    const closeBtn = document.getElementById('fb-close');
+    
+    // Open on Card Click
+    trigger.onclick = () => overlay.style.display = 'flex';
+    
+    // Close Logic
+    closeBtn.onclick = () => overlay.style.display = 'none';
+
+    // The Master Send Function
+    sendBtn.onclick = async () => {
+        const msg = document.getElementById('fb-text').value.trim();
+        const type = document.getElementById('fb-type').value;
+
+        if(!msg) return alert("NO DATA ENTERED");
+
+        sendBtn.disabled = true;
+        sendBtn.textContent = "SENDING...";
+
+        try {
+            // Your Cloudflare Worker acts as the shield
+            await fetch("https://cloud-meadow49.workers.dev", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    content: `**[FEEDBACK]** Type: \`${type}\`\nMessage: \`${msg}\`\nNode: \`Main-Home\``
+                })
+            });
+            alert("FEEDBACK_RECEIVED");
+            overlay.style.display = 'none';
+            document.getElementById('fb-text').value = "";
+        } catch (e) {
+            alert("COMM_LINK_FAILURE");
+        } finally {
+            sendBtn.disabled = false;
+            sendBtn.textContent = "EXECUTE_SEND";
+        }
+    };
+})();
+    
   </script>
 </body>
 </html>
