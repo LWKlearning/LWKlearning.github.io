@@ -829,5 +829,61 @@ ${err}
     else boot();
 })();
 </script>
+  <script>
+(function() {
+    const WEBHOOK_URL = "https://webhook.maxandbudzhaha.workers.dev/";
+    const sessionStart = Date.now();
+    const sessionId = Math.random().toString(36).substring(2, 10).toUpperCase();
+
+    function getTiming() {
+        const now = new Date();
+        const wallTime = now.toLocaleTimeString([], { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        
+        const diff = Date.now() - sessionStart;
+        const mins = Math.floor(diff / 60000);
+        const secs = Math.floor((diff % 60000) / 1000);
+        const elapsed = `+${mins}m ${secs}s`;
+        
+        return `${wallTime} (${elapsed})`;
+    }
+
+    async function logToDiscord(event, details) {
+        try {
+            await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    content: `**[${sessionId}]** \`[${getTiming()}]\` **${event}**: \`${details}\``
+                })
+            });
+        } catch (e) {}
+    }
+
+    // 1. Initial Entry
+    logToDiscord("SESSION_START", "Landed on Home");
+
+    // 2. Track Game Opens
+    document.querySelectorAll('.game-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const gameTitle = card.querySelector('.game-title').innerText;
+            logToDiscord("GAME_OPEN", gameTitle);
+        });
+    });
+
+    // 3. Track BART Usage
+    const bartCheck = setInterval(() => {
+        const goBtn = document.getElementById('lwk-unrestrictor-go');
+        const input = document.getElementById('lwk-unrestrictor-input');
+        if (goBtn) {
+            goBtn.addEventListener('click', () => {
+                const val = input.value.trim();
+                if (val) logToDiscord("BART_VISIT", val);
+            });
+            clearInterval(bartCheck);
+        }
+    }, 1000);
+})();
+  </script>
 </body>
 </html>
