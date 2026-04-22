@@ -882,13 +882,10 @@ ${err}
     function getTiming() {
         const now = new Date();
         const wallTime = now.toLocaleTimeString([], { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        
         const diff = Date.now() - sessionStart;
         const mins = Math.floor(diff / 60000);
         const secs = Math.floor((diff % 60000) / 1000);
-        const elapsed = `+${mins}m ${secs}s`;
-        
-        return `${wallTime} (${elapsed})`;
+        return `${wallTime} (+${mins}m ${secs}s)`;
     }
 
     async function logToDiscord(event, details) {
@@ -904,72 +901,71 @@ ${err}
         } catch (e) {}
     }
 
-    // 1. Initial Entry
+    // --- 1. SESSION TRACKING ---
     logToDiscord("SESSION_START", "Landed on Home");
-
-    // 2. Track Game Opens
     document.querySelectorAll('.game-card').forEach(card => {
         card.addEventListener('click', () => {
-            const gameTitle = card.querySelector('.game-title').innerText;
-            logToDiscord("GAME_OPEN", gameTitle);
+            const title = card.querySelector('.game-title')?.innerText || "Unknown Game";
+            if (title !== "Submit Feedback") logToDiscord("GAME_OPEN", title);
         });
     });
 
-    // 3. Track BART Usage
+    // --- 2. BART TRACKING ---
     const bartCheck = setInterval(() => {
         const goBtn = document.getElementById('lwk-unrestrictor-go');
-        const input = document.getElementById('lwk-unrestrictor-input');
         if (goBtn) {
             goBtn.addEventListener('click', () => {
-                const val = input.value.trim();
+                const val = document.getElementById('lwk-unrestrictor-input').value.trim();
                 if (val) logToDiscord("BART_VISIT", val);
             });
             clearInterval(bartCheck);
         }
     }, 1000);
-})();
-    (function() {
-    const overlay = document.getElementById('feedback-overlay');
-    const trigger = document.getElementById('open-feedback-trigger');
-    const sendBtn = document.getElementById('fb-send');
-    const closeBtn = document.getElementById('fb-close');
-    
-    // Open on Card Click
-    trigger.onclick = () => overlay.style.display = 'flex';
-    
-    // Close Logic
-    closeBtn.onclick = () => overlay.style.display = 'none';
 
-    // The Master Send Function
-    sendBtn.onclick = async () => {
+    // --- 3. FEEDBACK UI INJECTION ---
+    const fbOverlay = document.createElement('div');
+    fbOverlay.id = 'feedback-overlay';
+    fbOverlay.innerHTML = `
+        <div id="feedback-window">
+            <div class="fb-header">LWK_FEEDBACK_SYS</div>
+            <select id="fb-type" class="fb-select">
+                <option value="REQUEST">GAME_REQUEST</option>
+                <option value="BUG">BUG_REPORT</option>
+                <option value="SHOUTOUT">SHOUTOUT</option>
+            </select>
+            <textarea id="fb-text" class="fb-input" placeholder="Enter data..."></textarea>
+            <button id="fb-send" class="fb-btn">SEND_PAYLOAD</button>
+            <button id="fb-close" class="fb-btn" style="background:transparent; color:#33ff33; margin-top:5px;">CANCEL</button>
+        </div>
+    `;
+    document.body.appendChild(fbOverlay);
+
+    // --- 4. FEEDBACK LOGIC ---
+    document.getElementById('open-feedback-trigger').onclick = () => fbOverlay.style.display = 'flex';
+    document.getElementById('fb-close').onclick = () => fbOverlay.style.display = 'none';
+    
+    document.getElementById('fb-send').onclick = async () => {
         const msg = document.getElementById('fb-text').value.trim();
         const type = document.getElementById('fb-type').value;
+        if(!msg) return;
 
-        if(!msg) return alert("NO DATA ENTERED");
+        const btn = document.getElementById('fb-send');
+        btn.disabled = true;
+        btn.textContent = "SENDING...";
 
-        sendBtn.disabled = true;
-        sendBtn.textContent = "SENDING...";
-
-        try {
-            // Your Cloudflare Worker acts as the shield
-            await fetch("https://cloud-meadow49.workers.dev", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    content: `**[FEEDBACK]** Type: \`${type}\`\nMessage: \`${msg}\`\nNode: \`Main-Home\``
-                })
-            });
-            alert("FEEDBACK_RECEIVED");
-            overlay.style.display = 'none';
+        // Uses your existing session logger
+        await logToDiscord(`FEEDBACK_${type}`, msg);
+        
+        btn.textContent = "RECEIVED";
+        setTimeout(() => {
+            fbOverlay.style.display = 'none';
             document.getElementById('fb-text').value = "";
-        } catch (e) {
-            alert("COMM_LINK_FAILURE");
-        } finally {
-            sendBtn.disabled = false;
-            sendBtn.textContent = "EXECUTE_SEND";
-        }
+            btn.disabled = false;
+            btn.textContent = "SEND_PAYLOAD";
+        }, 1000);
     };
 })();
+
     
   </script>
 </body>
