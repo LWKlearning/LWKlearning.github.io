@@ -940,7 +940,25 @@ ${err}
     `;
     document.body.appendChild(fbOverlay);
 
-    // --- 4. FEEDBACK LOGIC ---
+    // --- Feedback UI Injection ---
+    const fbOverlay = document.createElement('div');
+    fbOverlay.style = "position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:2147483647; display:none; align-items:center; justify-content:center; font-family:monospace;";
+    fbOverlay.innerHTML = `
+        <div style="width:90%; max-width:400px; background:#000; border:2px solid #33ff33; padding:20px; box-shadow:0 0 15px #33ff33;">
+            <div style="font-size:1.2em; color:#33ff33; margin-bottom:15px; text-align:center;">LWK_FEEDBACK_SYS</div>
+            <select id="fb-type" style="width:100%; background:#000; border:1px solid #33ff33; color:#33ff33; padding:10px; margin-bottom:10px; font-family:monospace;">
+                <option value="REQUEST">GAME_REQUEST</option>
+                <option value="BUG">BUG_REPORT</option>
+                <option value="SHOUTOUT">SHOUTOUT</option>
+            </select>
+            <textarea id="fb-text" style="width:100%; height:100px; background:#000; border:1px solid #33ff33; color:#33ff33; padding:10px; margin-bottom:10px; font-family:monospace; resize:none;" placeholder="Enter data..."></textarea>
+            <button id="fb-send" style="width:100%; padding:10px; background:#33ff33; color:#000; border:none; font-weight:bold; cursor:pointer; font-family:monospace;">SEND_PAYLOAD</button>
+            <button id="fb-close" style="width:100%; padding:5px; background:transparent; color:#33ff33; border:none; margin-top:5px; cursor:pointer; font-family:monospace;">[CANCEL]</button>
+        </div>
+    `;
+    document.body.appendChild(fbOverlay);
+
+    // --- Feedback Logic ---
     document.getElementById('open-feedback-trigger').onclick = () => fbOverlay.style.display = 'flex';
     document.getElementById('fb-close').onclick = () => fbOverlay.style.display = 'none';
     
@@ -953,7 +971,7 @@ ${err}
         btn.disabled = true;
         btn.textContent = "SENDING...";
 
-        // Uses your existing session logger
+        // Hooks into your existing logToDiscord function
         await logToDiscord(`FEEDBACK_${type}`, msg);
         
         btn.textContent = "RECEIVED";
@@ -964,8 +982,8 @@ ${err}
             btn.textContent = "SEND_PAYLOAD";
         }, 1000);
     };
-})();
 
+    
     
   </script>
 </body>
