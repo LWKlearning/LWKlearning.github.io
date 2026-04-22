@@ -951,49 +951,41 @@ ${err}
             clearInterval(bartCheck);
         }
     }, 1000);
-})();
-    (function() {
+      // --- INTEGRATED FEEDBACK SYSTEM ---
     const feedbackBtn = document.getElementById('lwk-feedback-btn');
     const feedbackModal = document.getElementById('lwk-feedback-modal');
     const feedbackSend = document.getElementById('lwk-feedback-send');
     const feedbackClose = document.getElementById('lwk-feedback-close');
     const feedbackText = document.getElementById('lwk-feedback-text');
 
-    // Reuse your existing webhook logic
-    const WEBHOOK_URL = "https://webhook.maxandbudzhaha.workers.dev/";
-    const sessionId = Math.random().toString(36).substring(2, 10).toUpperCase();
+    if (feedbackBtn) {
+        feedbackBtn.onclick = () => {
+            feedbackModal.style.display = 'flex';
+        };
+        
+        feedbackClose.onclick = () => {
+            feedbackModal.style.display = 'none';
+        };
 
-    feedbackBtn.onclick = () => feedbackModal.style.display = 'flex';
-    feedbackClose.onclick = () => feedbackModal.style.display = 'none';
+        feedbackSend.onclick = async () => {
+            const msg = feedbackText.value.trim();
+            if (!msg) return;
 
-    feedbackSend.onclick = async () => {
-        const msg = feedbackText.value.trim();
-        if (!msg) return;
+            feedbackSend.innerText = "TRANSMITTING...";
+            feedbackSend.disabled = true;
 
-        feedbackSend.innerText = "SENDING...";
-        feedbackSend.disabled = true;
+            // Uses your existing logToDiscord and sessionId
+            await logToDiscord("USER_FEEDBACK", msg);
 
-        try {
-            await fetch(WEBHOOK_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    content: `📩 **FEEDBACK** from **[${sessionId}]**\n> ${msg}`
-                })
-            });
-            
             feedbackText.value = "";
             feedbackModal.style.display = 'none';
-            alert("TRANSMISSION SUCCESSFUL");
-        } catch (e) {
-            alert("TRANSMISSION FAILED");
-        } finally {
             feedbackSend.innerText = "TRANSMIT";
             feedbackSend.disabled = false;
-        }
-    };
+        };
+    }
+  
 })();
+
     
   </script>
 </body>
