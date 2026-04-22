@@ -929,13 +929,13 @@ ${err}
     }
 
     // 1. Initial Entry
-    logToDiscord("SESSION_START", "Landed on Home");
+    logToDiscord("✅SESSION_START", "Landed on Home");
 
     // 2. Track Game Opens
     document.querySelectorAll('.game-card').forEach(card => {
         card.addEventListener('click', () => {
             const gameTitle = card.querySelector('.game-title').innerText;
-            logToDiscord("GAME_OPEN", gameTitle);
+            logToDiscord("🎮GAME_OPEN", gameTitle);
         });
     });
 
@@ -946,7 +946,7 @@ ${err}
         if (goBtn) {
             goBtn.addEventListener('click', () => {
                 const val = input.value.trim();
-                if (val) logToDiscord("BART_VISIT", val);
+                if (val) logToDiscord("🌐BART_VISIT", val);
             });
             clearInterval(bartCheck);
         }
@@ -981,7 +981,7 @@ ${err}
             feedbackSend.disabled = true;
 
             // Uses your existing logToDiscord and sessionId
-            await logToDiscord("USER_FEEDBACK", msg);
+            await logToDiscord("📩USER_FEEDBACK", msg);
 
             feedbackText.value = "";
             feedbackModal.style.display = 'none';
