@@ -21,6 +21,63 @@
 
 <div id="intro-video-wrapper">
   <style>
+    /* Feedback Button & Modal */
+#lwk-feedback-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px; /* Opposite side of BART */
+    padding: 10px 15px;
+    background: black;
+    color: #33ff33;
+    border: 2px solid #33ff33;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 0 5px #33ff33;
+}
+
+#lwk-feedback-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: black;
+    border: 3px solid #33ff33;
+    padding: 20px;
+    z-index: 2147483647;
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    width: 300px;
+    box-shadow: 0 0 20px #33ff33;
+}
+
+#lwk-feedback-modal textarea {
+    background: #050505;
+    color: #33ff33;
+    border: 1px solid #33ff33;
+    padding: 10px;
+    font-family: 'Courier New', monospace;
+    resize: none;
+    height: 100px;
+}
+
+#lwk-feedback-modal button {
+    background: #33ff33;
+    color: black;
+    border: none;
+    padding: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#lwk-feedback-close {
+    background: transparent !important;
+    color: #33ff33 !important;
+    border: 1px solid #33ff33 !important;
+    margin-top: 5px;
+}
+    
     #intro-video-overlay {
       position: fixed;
       top: 0; left: 0;
@@ -243,7 +300,15 @@ h1 {
 </style>
 </head>
 <body>
+<button id="lwk-feedback-btn">REPORT / SUGGEST</button>
 
+<div id="lwk-feedback-modal">
+    <div style="text-shadow: 0 0 5px #33ff33;">[ FEEDBACK TERMINAL ]</div>
+    <textarea id="lwk-feedback-text" placeholder="Request a game or report a bug..."></textarea>
+    <button id="lwk-feedback-send">TRANSMIT</button>
+    <button id="lwk-feedback-close">CANCEL</button>
+</div>
+  
 <h1>Lowk Learning 2.0</h1>
 
 <div class="game-grid">
@@ -887,6 +952,49 @@ ${err}
         }
     }, 1000);
 })();
+    (function() {
+    const feedbackBtn = document.getElementById('lwk-feedback-btn');
+    const feedbackModal = document.getElementById('lwk-feedback-modal');
+    const feedbackSend = document.getElementById('lwk-feedback-send');
+    const feedbackClose = document.getElementById('lwk-feedback-close');
+    const feedbackText = document.getElementById('lwk-feedback-text');
+
+    // Reuse your existing webhook logic
+    const WEBHOOK_URL = "https://webhook.maxandbudzhaha.workers.dev/";
+    const sessionId = Math.random().toString(36).substring(2, 10).toUpperCase();
+
+    feedbackBtn.onclick = () => feedbackModal.style.display = 'flex';
+    feedbackClose.onclick = () => feedbackModal.style.display = 'none';
+
+    feedbackSend.onclick = async () => {
+        const msg = feedbackText.value.trim();
+        if (!msg) return;
+
+        feedbackSend.innerText = "SENDING...";
+        feedbackSend.disabled = true;
+
+        try {
+            await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    content: `📩 **FEEDBACK** from **[${sessionId}]**\n> ${msg}`
+                })
+            });
+            
+            feedbackText.value = "";
+            feedbackModal.style.display = 'none';
+            alert("TRANSMISSION SUCCESSFUL");
+        } catch (e) {
+            alert("TRANSMISSION FAILED");
+        } finally {
+            feedbackSend.innerText = "TRANSMIT";
+            feedbackSend.disabled = false;
+        }
+    };
+})();
+    
   </script>
 </body>
 </html>
