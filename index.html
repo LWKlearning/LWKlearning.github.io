@@ -951,15 +951,20 @@ ${err}
             clearInterval(bartCheck);
         }
     }, 1000);
-      // --- INTEGRATED FEEDBACK SYSTEM ---
+    // --- INTEGRATED FEEDBACK SYSTEM (ONE-TIME USE) ---
     const feedbackBtn = document.getElementById('lwk-feedback-btn');
     const feedbackModal = document.getElementById('lwk-feedback-modal');
     const feedbackSend = document.getElementById('lwk-feedback-send');
     const feedbackClose = document.getElementById('lwk-feedback-close');
     const feedbackText = document.getElementById('lwk-feedback-text');
+    let feedbackSent = false; // Prevents multiple sends in one session
 
     if (feedbackBtn) {
         feedbackBtn.onclick = () => {
+            if (feedbackSent) {
+                alert("FEEDBACK ALREADY TRANSMITTED FOR THIS SESSION.");
+                return;
+            }
             feedbackModal.style.display = 'flex';
         };
         
@@ -969,8 +974,9 @@ ${err}
 
         feedbackSend.onclick = async () => {
             const msg = feedbackText.value.trim();
-            if (!msg) return;
+            if (!msg || feedbackSent) return;
 
+            feedbackSent = true; 
             feedbackSend.innerText = "TRANSMITTING...";
             feedbackSend.disabled = true;
 
@@ -979,11 +985,14 @@ ${err}
 
             feedbackText.value = "";
             feedbackModal.style.display = 'none';
-            feedbackSend.innerText = "TRANSMIT";
-            feedbackSend.disabled = false;
+            
+            // Lock the main button so they can't open the modal again
+            feedbackBtn.innerText = "FEEDBACK SENT";
+            feedbackBtn.style.opacity = "0.5";
+            feedbackBtn.style.cursor = "default";
         };
     }
-  
+
 })();
 
     
