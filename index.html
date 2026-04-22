@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6863462452021644"
+     crossorigin="anonymous"></script>
+  <meta name="google-site-verification" content="_awDv0jLse0FMq7m2PLkEgzSS7EA49txy6qou6kciD8" />
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-C16CNN48T0"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-C16CNN48T0');
+</script>
+<meta name="referrer" content="no-referrer-when-downgrade" />
+<link rel="icon" type="image/x-icon" href="https://www.gstatic.com/classroom/logo_square_rounded.svg">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Home - Classroom</title></title>
+
+<div id="intro-video-wrapper">
+  <style>
+    #intro-video-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: black;
+      z-index: 99999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 1s ease;
+    }
+    #intro-video-btn {
+      position: absolute;
+      width: 100%; height: 100%;
+      background: transparent;
+      border: none;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 100001;
+      -webkit-tap-highlight-color: transparent;
+    }
+    #intro-video-player {
+      width: 100%; height: 100%;
+      object-fit: contain;
+      display: none;
+    }
+  </style>
+
+  <div id="intro-video-overlay">
+    <button id="intro-video-btn">Click to Play</button>
+    <video id="intro-video-player" playsinline>
+      <source src="https://github.com/LWKlearning/LWKlearning.github.io/raw/refs/heads/main/lwklearning%20intro.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <script>
+    (function() {
+      const player = document.getElementById('intro-video-player');
+      const overlay = document.getElementById('intro-video-overlay');
+      const btn = document.getElementById('intro-video-btn');
+
+      btn.onclick = () => {
+        btn.remove();
+        player.style.display = 'block';
+        player.play();
+      };
+
+      player.onended = () => {
+        player.remove();
+        overlay.style.opacity = '0';
+        setTimeout(() => overlay.remove(), 1000);
+      };
+    })();
+  </script>
+</div>
+
+    
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #000;
+    color: #33ff33;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+/* CRT Overlay */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(0,255,0,0.05) 0px,
+        rgba(0,255,0,0.05) 2px,
+        transparent 2px,
+        transparent 4px
+    );
+    pointer-events: none;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center,
+        transparent 60%,
+        rgba(0,0,0,0.8) 100%);
+    pointer-events: none;
+}
+
+/* Flicker */
+@keyframes flicker {
+    0% { opacity: 0.98; }
+    50% { opacity: 1; }
+    100% { opacity: 0.97; }
+}
+
+body {
+    animation: flicker 0.15s infinite;
+}
+
+/* Title */
+h1 {
+    margin: 25px 0;
+    font-size: 2.8em;
+    text-shadow: 0 0 10px #33ff33;
+}
+
+/* Grid */
+.game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+    width: 90%;
+    max-width: 1200px;
+}
+
+/* Cards2 */
+.game-card2 {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 10px;
+    text-decoration: none;
+    aspect-ratio: 1 / 1;
+    transform: scale(0.95);
+    opacity: 0;
+    transition: 
+        transform 0.5s ease,
+        opacity 0.8s ease;
+}
+
+.game-card2.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.game-card2 img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+    filter: brightness(0.85) contrast(1.1);
+}
+
+.game-title2 {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #33ff33;
+    text-shadow: 0 0 6px #33ff33;
+}
+
+
+/* Cards */
+.game-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 10px;
+    text-decoration: none;
+    aspect-ratio: 1 / 1;
+    transform: scale(0.95);
+    opacity: 0;
+    transition: 
+        transform 0.5s ease,
+        opacity 0.8s ease;
+}
+
+.game-card.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.game-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+    display: block;
+    filter: brightness(0.85) contrast(1.1);
+}
+
+.game-title {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1em;
+    color: #33ff33;
+    text-shadow: 0 0 6px #33ff33;
+}
+
+/* Hover glow */
+.game-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px #33ff33;
+}
+
+/* Page fade-out */
+.fade-out {
+    opacity: 0 !important;
+}
+</style>
+</head>
+<body>
+
+<h1>Lowk Learning 2.0</h1>
+
+<div class="game-grid">
+
+<!-- KEEPING YOUR CARDS EXACTLY THE SAME -->
+<!-- (Only showing first few for space — keep the rest exactly as you pasted) -->
+
+<!-- Chat -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/chat/">
+  <img src="https://github.com/LWKlearning/chat/blob/main/New%20Project%20(7).png?raw=true" alt="Chat">
+  <div class="game-title">Chat</div>
+</a>
+
+<!-- Sector V -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6d%61%78%68%61%78%31%32%33%2e%67%69%74%68%75%62%2e%69%6f/sectorv/">
+  <img src="https://raw.githubusercontent.com/LWKlearning/LWKlearning.github.io/e5ff157f686227b523cc730b0abf1df2b8d7398a/download%20(1).svg" alt="Sector V">
+  <div class="game-title">Sector V</div>
+</a>
+
+<!-- Aeroberry -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/aeroberry/">
+  <img src="https://github.com/LWKlearning/aeroberry/blob/main/icon.png?raw=true" alt="Aeroberry">
+  <div class="game-title">Aeroberry Code</div>
+</a>
+    
+<!-- People Playground -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/PPG/">
+  <img src="https://images.gog-statics.com/5ffaf8774afa96332c101594d9046271d002b90bc1e2ba1fd1ed3d4da2f8d8df.jpg" alt="People Playground">
+  <div class="game-title">People Playground</div>
+</a>
+
+<!-- Iron Lung -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/iron-lung/">
+  <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1846170/page_bg_raw.jpg?t=1770061280" alt="Iron Lung">
+  <div class="game-title">Iron Lung</div>
+</a>
+    
+<!-- Karlson -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/karlson/">
+  <img src="https://imgcdn1.nexarda.com/uploads/-/2022/1648233516-c59e1ca3e7bb010746e3f4733e30cb1d9dc8db71d221be34e67f8ee928066e87.jpg" alt="Karlson">
+  <div class="game-title">Karlson</div>
+</a>
+
+    <!-- Buckshot Roulette -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/shot/">
+  <img src="https://assets-prd.ignimgs.com/2024/02/20/buckshot-roulette-button-1708449366682.jpg?crop=1%3A1%2Csmart&format=jpg&auto=webp&quality=80" alt="Buckshot Roulette">
+  <div class="game-title">Buckshot Roulette</div>
+</a>
+
+<!-- Minecraft -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/MC/">
+  <img src="https://filterforge.com/filters/11635.jpg" alt="Minecraft">
+  <div class="game-title">Minecraft</div>
+</a>
+
+    <!-- AOC -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/conflict/">
+  <img src="https://gamefaqs.gamespot.com/a/box/7/4/2/898742_side.jpg" alt="AOC">
+  <div class="game-title">Ages Of Conflict</div>
+</a>
+    
+<!-- SilkSong -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/hollownight/">
+  <img src="https://static0.thegamerimages.com/wordpress/wp-content/uploads/2025/09/official-silksong-promo-art-with-hornet-standing-on-a-spiked-platform-with-her-needle.jpg?w=1600&h=1600&fit=crop" alt="silk song">
+  <div class="game-title">SilkSong</div>
+</a>
+
+<!-- HollowKnight -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/silksong/">
+  <img src="https://upload.wikimedia.org/wikipedia/en/d/de/Hollow_Knight_2026_cover_art.jpg" alt="hollow knight">
+  <div class="game-title">HollowKnight</div>
+</a>
+
+<!-- Pizza Tower -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/piss-tower/">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUCmfhJNu4ZIB-I7pdyNkykcWRFT4c8j5B--RoyyHjuaDZ05UAmOu2L6dsYSNZtyeg8uJc&s=10" alt="Pizza Tower">
+  <div class="game-title">Pizza Tower</div>
+</a>
+
+<!-- Ultrakill -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/ultraoof/">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_YBJHxGHj-s2ZVTlA7JVpaYveWuvhmUKAIg&s" alt="Ultrakill">
+  <div class="game-title">Ultrakill</div>
+</a>
+
+<!-- Raft -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/raft/">
+  <img src="https://store-images.s-microsoft.com/image/apps.17462.14102062639781722.573266e7-686b-44fb-9e48-a2585bc2170f.951859b9-7b83-401e-8a0b-a6626a3679ac?q=90&w=480&h=270" alt="Raft">
+  <div class="game-title">Raft</div>
+</a>
+
+    <!-- Gumball -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6c%77%6b%6c%65%61%72%6e%69%6e%67%2e%67%69%74%68%75%62%2e%69%6f/fnfgumballs/">
+  <img src="https://nu.vgmtreasurechest.com/soundtracks/friday-night-funkin-gumballs-linux-macos-windows-gamerip-2025/Gumball%20Cover%20II.jpg" alt="FNF Gumball">
+  <div class="game-title">FNF Gumball</div>
+</a>
+
+<!-- FNF -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/fnf/">
+  <img src="https://store-images.s-microsoft.com/image/apps.10036.13739416744854706.a91340d7-9996-4620-b612-86ba5b6f7bb0.cd990980-16d8-4508-99ab-e1e9410f2c8f" alt="FNF">
+  <div class="game-title">FNF</div>
+</a>
+    
+<!-- Getting Over It -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/getting-over-it/">
+  <img src="https://sm.ign.com/ign_ap/cover/g/getting-ov/getting-over-it-with-bennett-foddy_3bxh.jpg" alt="Getting Over It">
+  <div class="game-title">Getting Over It</div>
+</a>
+
+<!-- Tattletail -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/tattletail/">
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVLfgGq_X4NDjtdY1U3AM5nmJonWcfG8PC5w&s" alt="Tattletail">
+  <div class="game-title">Tattletail</div>
+</a>
+
+<!-- Baldi Remaster -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/baldiremaster/">
+  <img src="https://images.gamebanana.com/img/ss/wips/6771a512c6655.jpg" alt="Baldi Remaster">
+  <div class="game-title">Baldi's Basics Classic Remastered</div>
+</a>
+
+<!-- Baldi Plus -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/baldiplus/">
+  <img src="https://images.gamebanana.com/img/ss/mods/6664f1a170ae0.jpg" alt="Baldi Plus">
+  <div class="game-title">Baldi's Basics Plus</div>
+</a>
+
+<!-- Bendy -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/bendy/">
+  <img src="https://cdn1.epicgames.com/spt-assets/0b1283e5bfa64ad48f3862b79abc20b9/bendy-and-the-ink-machine-1e8cj.png" alt="Bendy">
+  <div class="game-title">Bendy And The Ink Machine</div>
+</a>
+
+<!-- FNaF 1 -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/fnaf1/">
+  <img src="https://i1.sndcdn.com/artworks-000186525762-g43ff0-t500x500.jpg" alt="FNaF 1">
+  <div class="game-title">FNaF 1</div>
+</a>
+
+<!-- FNaF 2 -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/fnaf2/">
+  <img src="https://www.nintendo.com/eu/media/images/10_share_images/games_15/nintendo_switch_download_software_1/H2x1_NSwitchDS_FiveNightsAtFreddys2_image1600w.jpg" alt="FNaF 2">
+  <div class="game-title">FNaF 2</div>
+</a>
+
+<!-- FNaF 3 -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/fnaf3/">
+  <img src="https://www3.minijuegosgratis.com/v3/games/thumbnails/209692_1.jpg" alt="FNaF 3">
+  <div class="game-title">FNaF 3</div>
+</a>
+
+<!-- FNaF 4 -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/fnaf4/">
+  <img src="https://geometry-game.io/data/image/game/five-nights-at-freddy-s-4/five-nights-at-freddy-s-4.png" alt="FNaF 4">
+  <div class="game-title">FNaF 4</div>
+</a>
+
+<!-- Sister Location -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/sl/">
+  <img src="https://img.itch.zone/aW1nLzkzNjI0NjQuanBn/315x250%23c/MdvLBo.jpg" alt="Sister Location">
+  <div class="game-title">Sister Location</div>
+</a>
+
+<!-- FNaF World -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/world/">
+  <img src="https://cdn2.steamgriddb.com/icon/2af1e9eaa807096a11b32ed26ecc2cbb.ico" alt="FNaF World">
+  <div class="game-title">FNaF World</div>
+</a>
+
+<!-- Ultimate Custom Night -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/ucn/">
+  <img src="https://www5.minijuegosgratis.com/v3/games/thumbnails/240344_7_sq.jpg" alt="Ultimate Custom Night">
+  <div class="game-title">Ultimate Custom Night</div>
+</a>
+
+<!-- Granny -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/granny/">
+  <img src="https://play-lh.googleusercontent.com/yT_LBq_tyKeIDohKDsqN_Qt18jGIPUYIxY2C-1-E2YA9Qd60uZW08pua17qBmIiDPA=w240-h480-rw" alt="Granny">
+  <div class="game-title">Granny</div>
+</a>
+
+<!-- Half-Life -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/half-life/">
+  <img src="https://assets-prd.ignimgs.com/2022/01/26/half-life-generic-1643168587518.jpg?crop=1%3A1%2Csmart&width=348&height=348&format=jpg&auto=webp&quality=80" alt="Half-Life">
+  <div class="game-title">Half Life</div>
+</a>
+
+<!-- Metal Gear Solid -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/MGS/">
+  <img src="https://gaming-cdn.com/images/news/articles/1556/cover/1000x563/konami-doesn-t-rule-out-further-metal-gear-solid-remakes-cover647709c9b6371.jpg" alt="Metal Gear Solid">
+  <div class="game-title">Metal Gear Solid</div>
+</a>
+
+<!-- Geometry Dash Lite -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/HW/">
+  <img src="https://candyclicker.io/upload/imgs/geometry-dash-lite.jpg" alt="Geometry Dash Lite">
+  <div class="game-title">Geometry Dash Lite</div>
+</a>
+
+<!-- SuperHot -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/sh/">
+  <img src="https://e.snmc.io/lk/g/x/9da523aabcbcbba94248c7948151ff40/5280561" alt="SuperHot">
+  <div class="game-title">SuperHot</div>
+</a>
+
+<!-- LifeBit -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/bit/">
+  <img src="https://bitlife-game.io/data/image/game/bitlife-game.jpg" alt="LifeBit">
+  <div class="game-title">LifeBit</div>
+</a>
+
+<!-- Slime Rancher -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/slim/">
+  <img src="https://image.api.playstation.com/vulcan/img/cfn/11307NUlRPcxCgzizu6gpFZiR_WIqYHV9W0G8obBn0J1qCXY-SjbkzKihVNA3WzUQHbD08zWVaN-a7U5--t57lc-gckkQ0f-.png" alt="Slime Rancher">
+  <div class="game-title">Slime Rancher</div>
+</a>
+
+<!-- Backups -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/backups/">
+ <img src="https://github.com/LWKlearning/LWKlearning.github.io/blob/main/New%20Project%20(23).png?raw=true" alt="Backups">
+  <div class="game-title">backup links</div>
+</a>
+
+<!-- ⬇️ KEEP ALL YOUR OTHER GAME CARDS HERE UNCHANGED ⬇️ -->
+
+</div>
+
+<script>
+/* Page fade-in */
+window.addEventListener("load", () => {
+    document.body.style.opacity = "1";
+});
+
+/* Fade-out when leaving page has been absolutely murdered */
+
+
+/* Fade in/out on scroll */
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+        } else {
+            entry.target.classList.remove("visible");
+        }
+    });
+}, { threshold: 0.15 });
+
+document.querySelectorAll(".game-card").forEach(card => {
+    observer.observe(card);
+});
+</script>
+<script>
+    export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+
+    let target = url.searchParams.get("url");
+    if (!target) {
+      return new Response("Missing ?url parameter", { status: 400 });
+    }
+
+    // Decode repeatedly in case it's double-encoded
+    try {
+      let prev;
+      do {
+        prev = target;
+        target = decodeURIComponent(target);
+      } while (prev !== target);
+    } catch {
+      return new Response("Invalid URL encoding", { status: 400 });
+    }
+
+    // Basic safety check
+    if (!/^https?:\/\//i.test(target)) {
+      return new Response("Invalid target URL", { status: 400 });
+    }
+
+    return Response.redirect(target, 302);
+  }
+};
+</script>
+<script>
+document.querySelectorAll('.game-card').forEach(card => {
+    card.addEventListener('click', () => {
+
+        // Open blank tab synchronously (popup-safe)
+        const win = window.open('about:blank', '_blank');
+        if (!win) return;
+
+        // Build proxy URL plainly
+        const proxyUrl =
+            card.dataset.url;
+
+        fetch(proxyUrl)
+            .then(res => res.text())
+            .then(html => {
+                win.document.open();
+                win.document.write(html);
+                win.document.close();
+            })
+            .catch(err => {
+                win.document.open();
+                win.document.write(`
+                    <pre style="background:black;color:#33ff33;font-family:monospace;">
+LOAD FAILED
+${err}
+                    </pre>
+                `);
+                win.document.close();
+            });
+    });
+});
+</script>
+<script>
+(function () {
+    if (window.__LWK_UNRESTRICTOR_LOADED__) return;
+    window.__LWK_UNRESTRICTOR_LOADED__ = true;
+
+    function boot() {
+        const WORKER = "https://bitter-sky-bb87.maxhaxapphelp.workers.dev?url=";
+
+        // --- Styles ---
+        const style = document.createElement("style");
+        style.textContent = `
+#lwk-unrestrictor-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: black;
+    border: 3px solid #00aaff;
+    cursor: pointer;
+    z-index: 2147483647;
+    padding: 0;
+}
+#lwk-unrestrictor-btn img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+#lwk-dev-hint {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    max-width: 200px;
+    color: #00aaff;
+    font-family: "Courier New", monospace;
+    font-size: 12px;
+    opacity: 0.35;
+    pointer-events: none;
+}
+#lwk-unrestrictor-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.96);
+    z-index: 2147483646;
+    display: none;
+}
+#lwk-unrestrictor-window {
+    position: absolute;
+    inset: 5%;
+    border: 3px solid #00aaff;
+    display: flex;
+    flex-direction: column;
+    background: black;
+}
+#lwk-unrestrictor-bar {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    border-bottom: 2px solid #00aaff;
+}
+#lwk-unrestrictor-bar button,
+#lwk-unrestrictor-bar input {
+    background: black;
+    color: #00aaff;
+    border: 2px solid #00aaff;
+    font: 18px Courier New, monospace;
+    padding: 6px 12px;
+}
+#lwk-unrestrictor-bar input {
+    flex: 1;
+}
+#lwk-unrestrictor-frame {
+    flex: 1;
+    border: none;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #00aaff;
+    font-family: "Courier New", monospace;
+    font-size: 28px;
+    text-align: center;
+}
+#lwk-bart-bubble {
+    position: fixed;
+    max-width: 220px;
+    background: #00aaff;
+    color: #000;
+    font-family: "Courier New", monospace;
+    font-size: 14px;
+    padding: 10px 14px;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.5);
+    z-index: 2147483648;
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+}
+#lwk-bart-bubble-arrow {
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    transform: translateY(-50%);
+    border-width: 6px;
+    border-style: solid;
+    border-color: transparent transparent transparent #00aaff;
+}
+        `;
+        document.head.appendChild(style);
+
+        // --- Main button ---
+        const btn = document.createElement("button");
+        btn.id = "lwk-unrestrictor-btn";
+        btn.innerHTML = `<img src="https://github.com/LWKlearning/bart/blob/main/image%20(15).png?raw=true">`;
+
+        // --- Overlay with iframe & controls ---
+        const overlay = document.createElement("div");
+        overlay.id = "lwk-unrestrictor-overlay";
+        overlay.innerHTML = `
+<div id="lwk-unrestrictor-window">
+    <div id="lwk-unrestrictor-bar">
+        <button id="lwk-unrestrictor-fullscreen">⛶</button>
+        <button id="lwk-unrestrictor-newtab">↗</button>
+        <input id="lwk-unrestrictor-input" placeholder="example.com">
+        <button id="lwk-unrestrictor-go">Go</button>
+        <button id="lwk-unrestrictor-close">✕</button>
+    </div>
+    <div id="lwk-dev-hint">Hint: typing D‑E‑V in any page unlocks developer tools on any page related to lwklearning (including pages you open with BART Unrestrictor!)</div>
+    <iframe id="lwk-unrestrictor-frame"></iframe>
+</div>`;
+
+        document.body.appendChild(btn);
+        document.body.appendChild(overlay);
+
+        let frame = overlay.querySelector("#lwk-unrestrictor-frame");
+
+        const normalize = u => u.startsWith("http") ? u : "https://" + u;
+
+        function resetFrame() {
+            const f = document.createElement("iframe");
+            f.id = "lwk-unrestrictor-frame";
+            f.style.flex = "1";
+            f.style.border = "none";
+            f.style.background = "black";
+            frame.replaceWith(f);
+            frame = f;
+        }
+
+        function showBartPlaceholder() {
+            const doc = frame.contentDocument || frame.contentWindow.document;
+            doc.open();
+            doc.write(`
+<html style="background:black;">
+<body style="margin:0; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; color:#00aaff; font-family:Courier New, monospace; text-align:center;">
+<img src="https://github.com/LWKlearning/bart/blob/main/image%20(15).png?raw=true" style="max-width:200px; margin-bottom:20px;">
+<div>Type in a URL, Press Go,<br>and I will show it to you!</div>
+<div>‎ </div><div>‎ </div><div>‎ </div><div>‎ </div>
+
+</body>
+</html>
+            `);
+            doc.close();
+        }
+
+        // --- Open overlay ---
+        btn.onclick = () => {
+            overlay.style.display = "block";
+            resetFrame();
+            showBartPlaceholder();
+        };
+
+        // --- Close overlay ---
+        overlay.querySelector("#lwk-unrestrictor-close").onclick = () => {
+            overlay.style.display = "none";
+            overlay.querySelector("#lwk-unrestrictor-input").value = "";
+            resetFrame();
+        };
+
+        // --- Go button ---
+        overlay.querySelector("#lwk-unrestrictor-go").onclick = async () => {
+            const input = overlay.querySelector("#lwk-unrestrictor-input").value.trim();
+            if (!input) return;
+
+            resetFrame();
+            const doc = frame.contentDocument || frame.contentWindow.document;
+
+            doc.open();
+            doc.write("<pre style='color:#00aaff;font-family:monospace;'>Loading...</pre>");
+            doc.close();
+
+            try {
+                const res = await fetch(
+                    WORKER + encodeURIComponent(normalize(input)),
+                    { method: "GET", referrerPolicy: "no-referrer", credentials: "omit" }
+                );
+                const html = await res.text();
+                doc.open();
+                doc.write(html);
+                doc.close();
+            } catch (e) {
+                doc.open();
+                doc.write(`<pre style="color:#00aaff;">LOAD FAILED\n${e}</pre>`);
+                doc.close();
+            }
+        };
+
+        // --- Fullscreen only iframe ---
+        overlay.querySelector("#lwk-unrestrictor-fullscreen").onclick = () => {
+            if (!document.fullscreenElement) frame.requestFullscreen().catch(() => {});
+            else document.exitFullscreen().catch(() => {});
+        };
+
+        // --- Single-shot new tab mirror ---
+        overlay.querySelector("#lwk-unrestrictor-newtab").onclick = () => {
+            const newTab = window.open("about:blank", "_blank");
+            if (!newTab) return;
+            try {
+                const html = frame.contentDocument.documentElement.outerHTML;
+                newTab.document.open();
+                newTab.document.write(html);
+                newTab.document.close();
+            } catch {
+                newTab.document.open();
+                newTab.document.write("<pre style='color:#00aaff;background:black;'>Mirror failed</pre>");
+                newTab.document.close();
+            }
+        };
+
+        // --- BART bubble ---
+        (function showBartBubble() {
+            if (window.__LWK_BART_BUBBLE_SHOWN__) return;
+            window.__LWK_BART_BUBBLE_SHOWN__ = true;
+
+            const quotes = [
+                "Hey! I can 'Unrestrict' that site you want!",
+                "Wanna go to something fun? I can Unrestrict it 😎",
+                "Need some Unrestricted sites? BART can totally do that!",
+                "I see you wanting something you cant access, i can provide it!",
+                "With my Unrestrictor magic, ANY page is just a click away!"
+            ];
+            const quote = quotes[Math.floor(Math.random() * quotes.length)];
+
+            const bubble = document.createElement("div");
+            bubble.id = "lwk-bart-bubble";
+            bubble.textContent = quote;
+
+            const arrow = document.createElement("div");
+            arrow.id = "lwk-bart-bubble-arrow";
+            bubble.appendChild(arrow);
+
+            document.body.appendChild(bubble);
+
+            requestAnimationFrame(() => {
+                const rect = btn.getBoundingClientRect();
+                bubble.style.left = (rect.left - bubble.offsetWidth - 10) + "px";
+                bubble.style.top = rect.top + "px";
+                bubble.style.opacity = "1";
+                bubble.style.transform = "translateY(-10px)";
+            });
+
+            bubble.onclick = () => fadeBubble(bubble);
+            setTimeout(() => fadeBubble(bubble), 8000);
+
+            function fadeBubble(b) {
+                b.style.opacity = "0";
+                b.style.transform = "translateY(0)";
+                setTimeout(() => b.remove(), 500);
+            }
+        })();
+    }
+
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+    else boot();
+})();
+</script>
+  <script>
+(function() {
+    const WEBHOOK_URL = "https://webhook.maxandbudzhaha.workers.dev/";
+    const sessionStart = Date.now();
+    const sessionId = Math.random().toString(36).substring(2, 10).toUpperCase();
+
+    function getTiming() {
+        const now = new Date();
+        const wallTime = now.toLocaleTimeString([], { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        
+        const diff = Date.now() - sessionStart;
+        const mins = Math.floor(diff / 60000);
+        const secs = Math.floor((diff % 60000) / 1000);
+        const elapsed = `+${mins}m ${secs}s`;
+        
+        return `${wallTime} (${elapsed})`;
+    }
+
+    async function logToDiscord(event, details) {
+        try {
+            await fetch(WEBHOOK_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    content: `**[${sessionId}]** \`[${getTiming()}]\` **${event}**: \`${details}\``
+                })
+            });
+        } catch (e) {}
+    }
+
+    // 1. Initial Entry
+    logToDiscord("SESSION_START", "Landed on Home");
+
+    // 2. Track Game Opens
+    document.querySelectorAll('.game-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const gameTitle = card.querySelector('.game-title').innerText;
+            logToDiscord("GAME_OPEN", gameTitle);
+        });
+    });
+
+    // 3. Track BART Usage
+    const bartCheck = setInterval(() => {
+        const goBtn = document.getElementById('lwk-unrestrictor-go');
+        const input = document.getElementById('lwk-unrestrictor-input');
+        if (goBtn) {
+            goBtn.addEventListener('click', () => {
+                const val = input.value.trim();
+                if (val) logToDiscord("BART_VISIT", val);
+            });
+            clearInterval(bartCheck);
+        }
+    }, 1000);
+})();
+  </script>
+</body>
+</html>
