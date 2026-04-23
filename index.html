@@ -899,7 +899,10 @@ ${err}
 </script>
   <script>
 (function() {
-    const WEBHOOK_URL = "https://webhook.maxandbudzhaha.workers.dev/";
+    // Replace these with your actual Webhook URLs for each channel
+    const WEBHOOK_URL_GENERAL = "https://webhook.maxandbudzhaha.workers.dev/"; 
+    const WEBHOOK_URL_FEEDBACK = "https://feedback.maxandbudzhaha.workers.dev/"; 
+
     const sessionStart = Date.now();
     const sessionId = Math.random().toString(36).substring(2, 10).toUpperCase();
 
@@ -916,8 +919,11 @@ ${err}
     }
 
     async function logToDiscord(event, details) {
+        // Determine which URL to use based on the event type
+        const targetUrl = (event === "📩USER_FEEDBACK") ? WEBHOOK_URL_FEEDBACK : WEBHOOK_URL_GENERAL;
+
         try {
-            await fetch(WEBHOOK_URL, {
+            await fetch(targetUrl, {
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
@@ -925,7 +931,9 @@ ${err}
                     content: `**[${sessionId}]** \`[${getTiming()}]\` **${event}**: \`${details}\``
                 })
             });
-        } catch (e) {}
+        } catch (e) {
+            console.error("Log failed", e);
+        }
     }
 
     // 1. Initial Entry
@@ -951,13 +959,14 @@ ${err}
             clearInterval(bartCheck);
         }
     }, 1000);
-    // --- INTEGRATED FEEDBACK SYSTEM (ONE-TIME USE) ---
+
+    // --- INTEGRATED FEEDBACK SYSTEM ---
     const feedbackBtn = document.getElementById('lwk-feedback-btn');
     const feedbackModal = document.getElementById('lwk-feedback-modal');
     const feedbackSend = document.getElementById('lwk-feedback-send');
     const feedbackClose = document.getElementById('lwk-feedback-close');
     const feedbackText = document.getElementById('lwk-feedback-text');
-    let feedbackSent = false; // Prevents multiple sends in one session
+    let feedbackSent = false;
 
     if (feedbackBtn) {
         feedbackBtn.onclick = () => {
@@ -980,19 +989,17 @@ ${err}
             feedbackSend.innerText = "TRANSMITTING...";
             feedbackSend.disabled = true;
 
-            // Uses your existing logToDiscord and sessionId
+            // This will now automatically route to WEBHOOK_URL_FEEDBACK
             await logToDiscord("📩USER_FEEDBACK", msg);
 
             feedbackText.value = "";
             feedbackModal.style.display = 'none';
             
-            // Lock the main button so they can't open the modal again
             feedbackBtn.innerText = "FEEDBACK SENT";
             feedbackBtn.style.opacity = "0.5";
             feedbackBtn.style.cursor = "default";
         };
     }
-
 })();
 
     
