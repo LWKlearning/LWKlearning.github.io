@@ -48,7 +48,7 @@
     display: none;
     flex-direction: column;
     gap: 10px;
-    width: 300px;
+    width: 320px;
     box-shadow: 0 0 20px #33ff33;
 }
 
@@ -293,6 +293,38 @@ h1 {
     box-shadow: 0 0 20px #33ff33;
 }
 
+#lwk-updates-container {
+    border: 1px solid rgba(51, 255, 51, 0.3);
+    padding: 8px;
+    background: rgba(0, 20, 0, 0.5);
+    margin-bottom: 10px;
+}
+
+.lwk-updates-log {
+    max-height: 80px; /* Limits height to make it scrollable */
+    overflow-y: auto;
+    font-size: 0.85em;
+    font-family: 'Courier New', monospace;
+}
+
+.lwk-updates-log p {
+    margin: 4px 0;
+    line-height: 1.2;
+    border-left: 2px solid #33ff33;
+    padding-left: 5px;
+}
+
+/* Scrollbar Styling for that Matrix/Retro look */
+.lwk-updates-log::-webkit-scrollbar {
+    width: 4px;
+}
+.lwk-updates-log::-webkit-scrollbar-track {
+    background: #000;
+}
+.lwk-updates-log::-webkit-scrollbar-thumb {
+    background: #33ff33;
+}
+  
 /* Page fade-out */
 .fade-out {
     opacity: 0 !important;
@@ -303,14 +335,24 @@ h1 {
 <button id="lwk-feedback-btn">REPORT / SUGGEST</button>
 
 <div id="lwk-feedback-modal">
-    <div style="text-shadow: 0 0 5px #33ff33;">[ FEEDBACK TERMINAL ]</div>
-    <textarea id="lwk-feedback-text" placeholder="Request a game or report a bug... if you troll here, we will ban you."></textarea>
+    <div style="text-shadow: 0 0 5px #33ff33; font-weight: bold; margin-bottom: 5px;">[ TERMINAL_FEEDBACK ]</div>
+    
+    <div id="lwk-updates-container">
+        <div style="font-size: 0.8em; color: #33ff33; opacity: 0.7; margin-bottom: 5px;">> PATCHES:</div>
+        <div class="lwk-updates-log">
+            <p>+ repuls.io is too advanced to add dawg</p>
+            <p>+ added n-gon</p>
+            <p>+ i will fix the fnaf stuff if people really get pissed about it.</p>
+            </div>
+    </div>
+
+    <textarea id="lwk-feedback-text" placeholder="Request a game or report a bug..."></textarea>
     <button id="lwk-feedback-send">TRANSMIT</button>
     <button id="lwk-feedback-close">CANCEL</button>
 </div>
   
 <h1>LWK Learning 2.0</h1>
-<p>🎉this is fr our 100th update rn🎉</p>
+<p>im gonna update this textbox every update ig. first day of me opening feedback!</p>
 <div class="game-grid">
 
 <!-- KEEPING YOUR CARDS EXACTLY THE SAME -->
@@ -333,7 +375,7 @@ h1 {
   <img src="https://github.com/LWKlearning/aeroberry/blob/main/icon.png?raw=true" alt="Aeroberry">
   <div class="game-title">Aeroberry Code</div>
 </a>
-    
+
 <!-- People Playground -->
 <a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/PPG/">
   <img src="https://images.gog-statics.com/5ffaf8774afa96332c101594d9046271d002b90bc1e2ba1fd1ed3d4da2f8d8df.jpg" alt="People Playground">
@@ -345,7 +387,13 @@ h1 {
   <img src="https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1846170/page_bg_raw.jpg?t=1770061280" alt="Iron Lung">
   <div class="game-title">Iron Lung</div>
 </a>
-    
+
+    <!-- N - Gon -->
+<a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6c%61%6e%64%67%72%65%65%6e%2e%67%69%74%68%75%62%2e%69%6f/n-gon/">
+  <img src="https://img.nutwg.com/uploads/2024/07/2024-07-06-064109765.webp" alt="n-gon">
+  <div class="game-title">n-gon</div>
+</a>
+  
 <!-- Karlson -->
 <a href="javascript:void(0)" class="game-card" data-url="https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=https://%6C%77%6B%6C%65%61%72%6E%69%6E%67%2E%67%69%74%68%75%62%2E%69%6F/karlson/">
   <img src="https://imgcdn1.nexarda.com/uploads/-/2022/1648233516-c59e1ca3e7bb010746e3f4733e30cb1d9dc8db71d221be34e67f8ee928066e87.jpg" alt="Karlson">
