@@ -133,14 +133,12 @@
   </script>
     <script>
 /**
- * LWK_OS // CLIENT_UPLINK_LISTENER
- * Frequency: 31s Pulse
- * Lifespan: Syncs with 60s Worker TTL
+ * LWK_OS // CLIENT_UPLINK_LISTENER // V2.1 (INTENSIFIED)
  */
 (function() {
     const CONFIG = {
         API: "https://moderators.maxandbudzhaha.workers.dev/api/check-effect",
-        POLL_RATE: 31000, // 31 Seconds
+        POLL_RATE: 31000,
         DEBUG: true 
     };
 
@@ -153,120 +151,113 @@
         }
     };
 
-    async function checkUplink() {
-        log("Initiating pulse check...");
-        try {
-            const requestUrl = `${CONFIG.API}?_t=${Date.now()}`;
-            const response = await fetch(requestUrl, { 
-                cache: "no-store",
-                mode: 'cors'
-            });
+    // Injecting glitch animation styles into the head
+    const style = document.createElement('style');
+    style.innerHTML = `
+        @keyframes os-glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-5px, 5px); }
+            40% { transform: translate(-5px, -5px); }
+            60% { transform: translate(5px, 5px); }
+            80% { transform: translate(5px, -5px); }
+            100% { transform: translate(0); }
+        }
+        @keyframes os-shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            50% { transform: translate(-1px, 2px) rotate(1deg); }
+            100% { transform: translate(1px, -2px) rotate(0deg); }
+        }
+        .os-glitch-active { animation: os-glitch 0.15s infinite; filter: hue-rotate(90deg) contrast(200%); }
+        .os-shake-active { animation: os-shake 0.1s infinite; }
+    `;
+    document.head.appendChild(style);
 
-            if (!response.ok) {
-                log(`Uplink Error: ${response.status}`);
-                return;
-            }
+    async function checkUplink() {
+        log("Pulse...");
+        try {
+            const response = await fetch(`${CONFIG.API}?_t=${Date.now()}`, { cache: "no-store" });
+            if (!response.ok) return;
 
             const data = await response.json();
-            log(`Data received: ${JSON.stringify(data)}`);
-
-            // FIX: Map the Worker keys ("time", "type", "message") to our variables
             const incomingTime = data.time || data.timestamp;
             const incomingEffect = data.type || data.effect;
             const incomingMsg = data.message || data.msg;
 
-            if (incomingTime) {
-                if (incomingTime > lastSeenTimestamp) {
-                    log(`New effect detected: ${incomingEffect}`);
-                    lastSeenTimestamp = incomingTime;
-                    executePayload(incomingEffect, incomingMsg);
-                } else {
-                    log("No new updates since last pulse.");
-                }
-            } else {
-                log("Payload received but missing time/timestamp field.");
+            if (incomingTime && incomingTime > lastSeenTimestamp) {
+                lastSeenTimestamp = incomingTime;
+                executePayload(incomingEffect, incomingMsg);
             }
-
-        } catch (err) {
-            log(`Sync Interrupted: ${err.message}`);
-        }
+        } catch (err) { log("Sync Fail."); }
     }
 
     function executePayload(effect, message) {
-        log(`CRITICAL: Triggering [${effect}]`);
+        log(`EXECUTE: ${effect}`);
 
         switch (effect) {
             case 'GLITCH':
-                const originalFilter = document.body.style.filter;
-                document.body.style.transition = "0.1s";
-                document.body.style.filter = "contrast(150%) hue-rotate(90deg) skewX(2deg)";
-                setTimeout(() => {
-                    document.body.style.filter = originalFilter || "none";
-                    log("GLITCH expired.");
-                }, 2000);
-                break;
-
-            case 'INVERT':
-                document.body.style.transition = "0.3s";
-                document.body.style.filter = "invert(1)";
-                setTimeout(() => {
-                    document.body.style.filter = "none";
-                    log("INVERT expired.");
-                }, 4000);
+                document.body.classList.add('os-glitch-active');
+                setTimeout(() => document.body.classList.remove('os-glitch-active'), 3000);
                 break;
 
             case 'THUD':
+            case 'BOOM':
+                // Visual Shake
+                document.body.classList.add('os-shake-active');
+                // Audio Boom
                 try {
                     const ctx = new (window.AudioContext || window.webkitAudioContext)();
                     const osc = ctx.createOscillator();
                     const gain = ctx.createGain();
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(60, ctx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
-                    gain.gain.setValueAtTime(0.6, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(150, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
+                    gain.gain.setValueAtTime(1.0, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
                     osc.connect(gain);
                     gain.connect(ctx.destination);
                     osc.start();
-                    osc.stop(ctx.currentTime + 0.5);
-                    log("THUD played.");
+                    osc.stop(ctx.currentTime + 0.8);
                 } catch (e) { log("Audio Blocked"); }
+                setTimeout(() => document.body.classList.remove('os-shake-active'), 8000);
+                break;
+
+            case 'MESSAGE':
+                const overlay = document.createElement('div');
+                overlay.style = `
+                    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+                    background: rgba(0,0,0,0.95); color: #ff0000; z-index: 9999999;
+                    display: flex; flex-direction: column; align-items: center; justify-content: center;
+                    font-family: 'Courier New', monospace; border: 20px solid #ff0000; box-sizing: border-box;
+                `;
+                overlay.innerHTML = `
+                    <h1 style="font-size: 50px; margin: 0; animation: blinker 0.5s linear infinite;">[ SYSTEM ALERT ]</h1>
+                    <p style="font-size: 30px; color: white; text-align: center; padding: 20px;">${message}</p>
+                    <style>@keyframes blinker { 50% { opacity: 0; } }</style>
+                `;
+                document.body.appendChild(overlay);
+                setTimeout(() => overlay.remove(), 8000);
+                break;
+
+            case 'INVERT':
+                document.body.style.filter = "invert(1)";
+                setTimeout(() => document.body.style.filter = "none", 4000);
                 break;
 
             case 'PARTY':
                 let ticks = 0;
                 const partyLoop = setInterval(() => {
-                    document.body.style.backgroundColor = (ticks % 2 === 0) ? "#ff00ff" : "#00ffff";
-                    if (++ticks > 20) {
+                    document.body.style.backgroundColor = (ticks % 2 === 0) ? "#f0f" : "#0ff";
+                    if (++ticks > 40) {
                         clearInterval(partyLoop);
                         document.body.style.backgroundColor = "";
-                        log("PARTY finished.");
                     }
-                }, 150);
+                }, 100);
                 break;
-
-            case 'MESSAGE':
-                log(`Broadcasting: ${message}`);
-                const banner = document.createElement('div');
-                banner.style = `
-                    position: fixed; top: 0; left: 0; width: 100%; 
-                    background: #000; color: #00ff41; padding: 15px; 
-                    text-align: center; font-family: 'Courier New', monospace; 
-                    font-size: 14px; font-weight: bold; z-index: 1000000;
-                    border-bottom: 2px solid #00ff41; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
-                `;
-                banner.innerHTML = `> [SYSTEM_BROADCAST]: ${message}`;
-                document.body.appendChild(banner);
-                setTimeout(() => banner.remove(), 7000);
-                break;
-
-            default:
-                log(`Unknown effect: ${effect}`);
         }
     }
 
-    // Initialize
-    log(`Uplink active. Rate: ${CONFIG.POLL_RATE}ms`);
     setInterval(checkUplink, CONFIG.POLL_RATE);
     checkUplink();
 })();
