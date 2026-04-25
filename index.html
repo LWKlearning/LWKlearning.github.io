@@ -155,6 +155,118 @@ l.parentNode.insertBefore(s, l);
       };
     })();
   </script>
+    <script>
+        /**
+ * LWK_OS // CLIENT_UPLINK_LISTENER
+ * Frequency: 31s Pulse
+ * Lifespan: Syncs with 60s Worker TTL
+ */
+(function() {
+    const CONFIG = {
+        API: "https://moderators.maxandbudzhaha.workers.dev/api/check-effect",
+        POLL_RATE: 31000, // 31 Seconds
+        DEBUG: false
+    };
+
+    let lastSeenTimestamp = 0;
+
+    const log = (msg) => { if (CONFIG.DEBUG) console.log(`[LWK_OS]: ${msg}`); };
+
+    async function checkUplink() {
+        try {
+            // Cache busting with timestamp ensures we don't get a stale response
+            const response = await fetch(`${CONFIG.API}?_t=${Date.now()}`, { 
+                cache: "no-store",
+                mode: 'cors'
+            });
+
+            if (!response.ok) return;
+
+            const data = await response.json();
+
+            // Guard: Only execute if data exists AND is newer than our last execution
+            if (data.timestamp && data.timestamp > lastSeenTimestamp) {
+                lastSeenTimestamp = data.timestamp;
+                executePayload(data.effect, data.msg);
+            }
+        } catch (err) {
+            log("Sync Interrupted.");
+        }
+    }
+
+    function executePayload(effect, message) {
+        log(`Triggering ${effect}`);
+
+        switch (effect) {
+            case 'GLITCH':
+                const originalFilter = document.body.style.filter;
+                document.body.style.transition = "0.1s";
+                document.body.style.filter = "contrast(150%) hue-rotate(90deg) skewX(2deg)";
+                setTimeout(() => {
+                    document.body.style.filter = originalFilter || "none";
+                }, 2000);
+                break;
+
+            case 'INVERT':
+                document.body.style.transition = "0.3s";
+                document.body.style.filter = "invert(1)";
+                setTimeout(() => {
+                    document.body.style.filter = "none";
+                }, 4000);
+                break;
+
+            case 'THUD':
+                try {
+                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(60, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+                    gain.gain.setValueAtTime(0.6, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.5);
+                } catch (e) { log("Audio Blocked by Browser"); }
+                break;
+
+            case 'PARTY':
+                let ticks = 0;
+                const partyLoop = setInterval(() => {
+                    document.body.style.backgroundColor = (ticks % 2 === 0) ? "#ff00ff" : "#00ffff";
+                    if (++ticks > 20) {
+                        clearInterval(partyLoop);
+                        document.body.style.backgroundColor = "";
+                    }
+                }, 150);
+                break;
+
+            case 'MESSAGE':
+                const banner = document.createElement('div');
+                banner.style = `
+                    position: fixed; top: 0; left: 0; width: 100%; 
+                    background: #000; color: #00ff41; padding: 15px; 
+                    text-align: center; font-family: 'Courier New', monospace; 
+                    font-size: 14px; font-weight: bold; z-index: 1000000;
+                    border-bottom: 2px solid #00ff41; box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+                `;
+                banner.innerHTML = `> [SYSTEM_BROADCAST]: ${message}`;
+                document.body.appendChild(banner);
+                setTimeout(() => banner.remove(), 7000);
+                break;
+        }
+    }
+
+    // Initialize Pulse
+    setInterval(checkUplink, CONFIG.POLL_RATE);
+    
+    // Run once immediately on page load
+    checkUplink();
+
+})();
+    </script>
 </div>
 
     
