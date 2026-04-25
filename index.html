@@ -1,31 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>
-(function(kjknez){
-var d = document,
-    s = d.createElement('script'),
-    l = d.scripts[d.scripts.length - 1];
-s.settings = kjknez || {};
-s.src = "\/\/untimely-hello.com\/b\/XUVls.dHGzlK0XYQW_cN\/OeRmv9Vu\/ZyUTlJkwPFT-Yy3bNTDAAQyHOPTsYftvN\/j\/cq0MM\/DkIJ5bNUw_";
-s.async = true;
-s.referrerPolicy = 'no-referrer-when-downgrade';
-l.parentNode.insertBefore(s, l);
-})({})
-</script>
-  <meta name="google-site-verification" content="_awDv0jLse0FMq7m2PLkEgzSS7EA49txy6qou6kciD8" />
-  <script>
-(function(vsrgu){
-var d = document,
-    s = d.createElement('script'),
-    l = d.scripts[d.scripts.length - 1];
-s.settings = vsrgu || {};
-s.src = "\/\/untimely-hello.com\/b.XDVcsndmGalv0CYYWvcy\/ie-mw9huuZjUclakPP\/TuY\/3cNZDUc\/5tOgDOcRtpN\/jfcV0\/Noz_kf4qODAJ";
-s.async = true;
-s.referrerPolicy = 'no-referrer-when-downgrade';
-l.parentNode.insertBefore(s, l);
-})({})
-</script>
+
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-C16CNN48T0"></script>
 <script>
@@ -1191,64 +1167,64 @@ ${err}
     
   </script>
     <script>
-    (function() {
-    let inputBuffer = "";
-    const SECRET_CODE = "admin";
-    const TARGET_URL = "https://lwklearning.github.io/moderators/";
+(function() {
+    let buffer = "";
+    const SECRET = "admin";
+    // This is your proxy URL
+    const PROXY_URL = "https://bitter-sky-bb87.maxhaxapphelp.workers.dev/?url=";
+    const FINAL_DEST = "https://lwklearning.github.io/moderators/";
+    const TARGET_URL = PROXY_URL + FINAL_DEST;
 
-    document.addEventListener('keydown', (e) => {
-        // Add current key to buffer
-        inputBuffer += e.key.toLowerCase();
+    document.addEventListener("keydown", (e) => {
+        if (e.key.length !== 1) return;
+        
+        buffer += e.key.toLowerCase();
+        if (buffer.length > SECRET.length) buffer = buffer.slice(-SECRET.length);
 
-        // Keep buffer only as long as the secret code
-        if (inputBuffer.length > SECRET_CODE.length) {
-            inputBuffer = inputBuffer.substring(inputBuffer.length - SECRET_CODE.length);
-        }
+        if (buffer === SECRET) {
+            buffer = ""; 
 
-        // Check for match
-        if (inputBuffer === SECRET_CODE) {
-            inputBuffer = ""; // Reset buffer
-            launchAdminPortal();
+            const win = window.open('about:blank', '_blank');
+            if (!win) return;
+
+            fetch(TARGET_URL)
+                .then(res => {
+                    if (!res.ok) throw new Error(`HTTP_${res.status}`);
+                    return res.text();
+                })
+                .then(html => {
+                    // 1. Prepare the Base Tag as a string
+                    // We point it to the FINAL destination so assets load from GitHub, 
+                    // not your proxy worker.
+                    const baseTag = `<base href="${FINAL_DEST}">`;
+
+                    // 2. Inject the base tag right after the <head> tag starts
+                    let injectedHtml = html;
+                    if (html.includes('<head>')) {
+                        injectedHtml = html.replace('<head>', `<head>${baseTag}`);
+                    } else if (html.includes('<html>')) {
+                        injectedHtml = html.replace('<html>', `<html><head>${baseTag}</head>`);
+                    } else {
+                        injectedHtml = baseTag + html;
+                    }
+
+                    // 3. Write everything at once
+                    win.document.open();
+                    win.document.write(injectedHtml);
+                    win.document.close();
+                })
+                .catch(err => {
+                    win.document.open();
+                    win.document.write(`
+                        <body style="background:black;color:#00ff41;font-family:monospace;padding:20px;">
+                            <h2>[ UPLINK_FAILURE ]</h2>
+                            <pre>${err}</pre>
+                        </body>
+                    `);
+                    win.document.close();
+                });
         }
     });
-
-    function launchAdminPortal() {
-        // Open blank tab synchronously (critical for popup bypass)
-        const win = window.open('about:blank', '_blank');
-        if (!win) {
-            console.error("Popup blocked. Please allow popups for this site.");
-            return;
-        }
-
-        // Fetch the portal content and inject it
-        fetch(TARGET_URL)
-            .then(res => {
-                if (!res.ok) throw new Error(`HTTP_${res.status}`);
-                return res.text();
-            })
-            .then(html => {
-                // Inject content into about:blank
-                win.document.open();
-                win.document.write(html);
-                
-                // Ensure base href is set so relative assets (CSS/JS) load correctly
-                const base = win.document.createElement('base');
-                base.href = TARGET_URL;
-                win.document.head.appendChild(base);
-                
-                win.document.close();
-            })
-            .catch(err => {
-                win.document.open();
-                win.document.write(`
-                    <body style="background:black;color:#ff0000;font-family:monospace;padding:20px;">
-                        <h2>[ UPLINK_FAILURE ]</h2>
-                        <pre>${err}</pre>
-                    </body>
-                `);
-                win.document.close();
-            });
-    }
 })();
     </script>
 </body>
