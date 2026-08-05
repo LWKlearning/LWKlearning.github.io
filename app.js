@@ -10,7 +10,7 @@
     "title": "Applications",
     "cat": "Apps & Tools",
     "img": "https://github.com/LWKlearning/LWKlearning.github.io/blob/main/New%20Project%20(25).png?raw=true",
-    "url": "https://raw.githack.com/lwklearning/applications/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/applications@main/index.html"
   },
   {
     "title": "join the discord",
@@ -22,37 +22,37 @@
     "title": "Devblog",
     "cat": "Apps & Tools",
     "img": "https://raw.githubusercontent.com/LWKlearning/blog/refs/heads/main/epikrender.jpg",
-    "url": "https://raw.githack.com/lwklearning/blog/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/blog@main/index.html"
   },
   {
     "title": "Chat",
     "cat": "Apps & Tools",
     "img": "https://github.com/LWKlearning/chat/blob/main/New%20Project%20(7).png?raw=true",
-    "url": "https://raw.githack.com/lwklearning/chat/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/chat@main/index.html"
   },
   {
     "title": "Sector V",
     "cat": "Action",
     "img": "https://raw.githubusercontent.com/LWKlearning/LWKlearning.github.io/e5ff157f686227b523cc730b0abf1df2b8d7398a/download%20(1).svg",
-    "url": "https://raw.githack.com/maxhax123/sectorv/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/maxhax123/sectorv@main/index.html"
   },
   {
     "title": "Aeroberry Code",
     "cat": "Apps & Tools",
     "img": "https://github.com/LWKlearning/aeroberry/blob/main/icon.png?raw=true",
-    "url": "https://raw.githack.com/lwklearning/aeroberry/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/aeroberry@main/index.html"
   },
   {
     "title": "johntool",
     "cat": "Apps & Tools",
     "img": "https://github.com/LWKlearning/johntool/blob/main/image%20(22).png?raw=true",
-    "url": "https://raw.githack.com/lwklearning/johntool/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/johntool@main/index.html"
   },
   {
     "title": "backup links",
     "cat": "Apps & Tools",
     "img": "https://github.com/LWKlearning/LWKlearning.github.io/blob/main/New%20Project%20(23).png?raw=true",
-    "url": "https://raw.githack.com/lwklearning/backups/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/backups@main/index.html"
   },
   {
     "title": "Roblox",
@@ -136,7 +136,7 @@
     "title": "Baldi's Basics Plus",
     "cat": "Horror",
     "img": "https://images.gamebanana.com/img/ss/mods/6664f1a170ae0.jpg",
-    "url": "https://raw.githack.com/lwklearning/baldiplus/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/baldiplus@main/index.html"
   },
   {
     "title": "Baldi's Birthday Bash",
@@ -184,7 +184,7 @@
     "title": "FNF",
     "cat": "Rhythm",
     "img": "https://store-images.s-microsoft.com/image/apps.10036.13739416744854706.a91340d7-9996-4620-b612-86ba5b6f7bb0.cd990980-16d8-4508-99ab-e1e9410f2c8f",
-    "url": "https://raw.githack.com/lwklearning/fnf/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/fnf@main/index.html"
   },
   {
     "title": "Moto X3M",
@@ -214,19 +214,19 @@
     "title": "Karlson",
     "cat": "FPS",
     "img": "https://imgcdn1.nexarda.com/uploads/-/2022/1648233516-c59e1ca3e7bb010746e3f4733e30cb1d9dc8db71d221be34e67f8ee928066e87.jpg",
-    "url": "https://raw.githack.com/lwklearning/karlson/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/karlson@main/index.html"
   },
   {
     "title": "Bendy And The Ink Machine",
     "cat": "Horror",
     "img": "https://cdn1.epicgames.com/spt-assets/0b1283e5bfa64ad48f3862b79abc20b9/bendy-and-the-ink-machine-1e8cj.png",
-    "url": "https://raw.githack.com/lwklearning/bendy/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/bendy@main/index.html"
   },
   {
     "title": "Granny",
     "cat": "Horror",
     "img": "https://play-lh.googleusercontent.com/yT_LBq_tyKeIDohKDsqN_Qt18jGIPUYIxY2C-1-E2YA9Qd60uZW08pua17qBmIiDPA=w240-h480-rw",
-    "url": "https://raw.githack.com/lwklearning/granny/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/granny@main/index.html"
   },
   {
     "title": "A Difficult Game About Climbing",
@@ -238,7 +238,7 @@
     "title": "Ages Of Conflict",
     "cat": "Puzzle / Strategy",
     "img": "https://www.allkeyshop.com/blog/wp-content/uploads/Ages-of-Conflict-World-War-Simulator.jpg",
-    "url": "https://raw.githack.com/lwklearning/conflict/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/conflict@main/index.html"
   },
   {
     "title": "Amanda the Adventurer",
@@ -268,7 +268,7 @@
     "title": "Backrooms",
     "cat": "Horror",
     "img": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/HobbyTown_USA_Oshkosh_interior_under_construction_2002_%28The_Backrooms%29.jpg/250px-HobbyTown_USA_Oshkosh_interior_under_construction_2002_%28The_Backrooms%29.jpg",
-    "url": "https://raw.githack.com/lwklearning/backrooms/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/backrooms@main/index.html"
   },
   {
     "title": "Bad Parenting 1",
@@ -316,7 +316,7 @@
     "title": "Buckshot Roulette",
     "cat": "Horror",
     "img": "https://assets-prd.ignimgs.com/2024/02/20/buckshot-roulette-button-1708449366682.jpg?crop=1%3A1%2Csmart&format=jpg&auto=webp&quality=80",
-    "url": "https://raw.githack.com/lwklearning/shot/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/shot@main/index.html"
   },
   {
     "title": "Call of Duty: Mobile",
@@ -418,13 +418,13 @@
     "title": "Infinite Craft",
     "cat": "Puzzle / Strategy",
     "img": "https://cdn.prod.website-files.com/65e7db4e2f26f492c41dc356/65e7de4c7d10d92bb5c28319_Thi%E1%BA%BFt%20k%E1%BA%BF%20ch%C6%B0a%20c%C3%B3%20t%C3%AAn%20(18).png",
-    "url": "https://raw.githack.com/lwklearning/infinitecraft/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/infinitecraft@main/index.html"
   },
   {
     "title": "Iron Lung",
     "cat": "Horror",
     "img": "https://shared.fastly.steamstatic.com/store_item_assets/steam/apps/1846170/page_bg_raw.jpg?t=1770061280",
-    "url": "https://raw.githack.com/lwklearning/iron-lung/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/iron-lung@main/index.html"
   },
   {
     "title": "Kindergarten 1",
@@ -472,19 +472,19 @@
     "title": "Meatboy",
     "cat": "Platformer",
     "img": "https://cdn.mobygames.com/covers/6546285-super-meat-boy-ultra-rare-edition-windows-front-cover.jpg",
-    "url": "https://raw.githack.com/lwklearning/meatboy/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/meatboy@main/index.html"
   },
   {
     "title": "Metal Gear Solid",
     "cat": "Action",
     "img": "https://gaming-cdn.com/images/news/articles/1556/cover/1000x563/konami-doesn-t-rule-out-further-metal-gear-solid-remakes-cover647709c9b6371.jpg",
-    "url": "https://raw.githack.com/lwklearning/mgs/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/mgs@main/index.html"
   },
   {
     "title": "Minecraft",
     "cat": "Sandbox / Sports",
     "img": "https://filterforge.com/filters/11635.jpg",
-    "url": "https://raw.githack.com/lwklearning/MC/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/MC@main/index.html"
   },
   {
     "title": "Minesweeper",
@@ -526,7 +526,7 @@
     "title": "People Playground",
     "cat": "Sandbox / Sports",
     "img": "https://images.gog-statics.com/5ffaf8774afa96332c101594d9046271d002b90bc1e2ba1fd1ed3d4da2f8d8df.jpg",
-    "url": "https://raw.githack.com/lwklearning/PPG/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/PPG@main/index.html"
   },
   {
     "title": "Pokemon Blue",
@@ -628,7 +628,7 @@
     "title": "Raft",
     "cat": "Sandbox / Sports",
     "img": "https://store-images.s-microsoft.com/image/apps.17462.14102062639781722.573266e7-686b-44fb-9e48-a2585bc2170f.951859b9-7b83-401e-8a0b-a6626a3679ac?q=90&w=480&h=270",
-    "url": "https://raw.githack.com/lwklearning/raft/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/raft@main/index.html"
   },
   {
     "title": "Raldi's Crackhouse",
@@ -670,7 +670,7 @@
     "title": "SilkSong",
     "cat": "Action",
     "img": "https://static0.thegamerimages.com/wordpress/wp-content/uploads/2025/09/official-silksong-promo-art-with-hornet-standing-on-a-spiked-platform-with-her-needle.jpg?w=1600&h=1600&fit=crop",
-    "url": "https://raw.githack.com/lwklearning/silksong/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/silksong@main/index.html"
   },
   {
     "title": "Slender: The 8 Pages",
@@ -718,7 +718,7 @@
     "title": "Tattletail",
     "cat": "Horror",
     "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVLfgGq_X4NDjtdY1U3AM5nmJonWcfG8PC5w&s",
-    "url": "https://raw.githack.com/lwklearning/tattletail/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/tattletail@main/index.html"
   },
   {
     "title": "Terraria",
@@ -748,7 +748,7 @@
     "title": "Trees Hate you",
     "cat": "Action",
     "img": "https://snowrider3d.com/data/image/game/trees-hate-you/trees-hate-you.png",
-    "url": "https://raw.githack.com/lwklearning/treeshateyou/main/index.html"
+    "url": "https://cdn.jsdelivr.net/gh/lwklearning/treeshateyou@main/index.html"
   },
   {
     "title": "Undertale",
@@ -950,6 +950,24 @@
   ];
   
   const ARCTIC_PROXY_HOST = "https://korona.lat";
+  // Client-side HTML loader for jsDelivr-hosted apps (jsDelivr serves .html as text/plain).
+  function addBaseHref(html, targetUrl) {
+    if (/<base\b/i.test(html)) return html;
+    const base = targetUrl.slice(0, targetUrl.lastIndexOf("/") + 1);
+    return html.replace(/<head([^>]*)>/i, '<head$1><base href="' + base + '">');
+  }
+  async function fetchHtmlApp(targetUrl) {
+    const res = await fetch(targetUrl, { cache: "no-store" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    return addBaseHref(await res.text(), targetUrl);
+  }
+  async function loadHtmlApp(frame, targetUrl) {
+    try {
+      frame.srcdoc = await fetchHtmlApp(targetUrl);
+    } catch (err) {
+      frame.src = targetUrl;
+    }
+  }
 
   function getArcticProxyUrl(targetUrl) {
     if (!targetUrl) return "about:blank";
@@ -1023,7 +1041,13 @@
     }
     currentGameUrl = game.url;
     if (playerInput) playerInput.value = game.url;
-    if (playerFrame) playerFrame.src = game.url;
+    if (playerFrame) {
+      if (game.url.startsWith("https://cdn.jsdelivr.net/gh/")) {
+        loadHtmlApp(playerFrame, game.url);
+      } else {
+        playerFrame.src = game.url;
+      }
+    }
     if (playerModal) playerModal.classList.add("is-open");
   }
 
@@ -1032,18 +1056,25 @@
     if (playerFrame) playerFrame.src = "about:blank";
   }
 
-  function openStealthTab() {
+  async function openStealthTab() {
     if (!currentGameUrl) return;
     const win = window.open("about:blank", "_blank");
-    if (win) {
-      win.document.write(`
-        <!DOCTYPE html>
-        <html>
-        <head><title>${document.title}</title><style>html,body{margin:0;height:100%;overflow:hidden;background:#000;}iframe{width:100%;height:100%;border:none;}</style></head>
-        <body><iframe src="${currentGameUrl}"></iframe></body>
-        </html>
-      `);
-      win.document.close();
+    if (!win) return;
+    let srcdoc = "";
+    if (currentGameUrl.startsWith("https://cdn.jsdelivr.net/gh/")) {
+      try { srcdoc = await fetchHtmlApp(currentGameUrl); } catch (err) {}
+    }
+    win.document.write(`
+      <!DOCTYPE html>
+      <html>
+      <head><title>${document.title}</title><style>html,body{margin:0;height:100%;overflow:hidden;background:#000;}iframe{width:100%;height:100%;border:none;}</style></head>
+      <body><iframe id="lwk-stealth-frame" ${srcdoc ? "" : 'src="' + currentGameUrl + '"'}></iframe></body>
+      </html>
+    `);
+    win.document.close();
+    if (srcdoc) {
+      const f = win.document.getElementById("lwk-stealth-frame");
+      if (f) f.srcdoc = srcdoc;
     }
   }
 
@@ -1244,7 +1275,7 @@
           <!DOCTYPE html>
           <html>
           <head>
-            <script src="https://cdn.jsdelivr.net/gh/luminsdk/script@latest/lumin.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/gh/luminsdk/script@latest/lumin.min.js"><\/script>
           </head>
           <body style="margin:0;overflow:hidden;background:#000;">
             <iframe src="${targetUrl}" style="width:100%;height:100%;border:none;position:fixed;inset:0;"></iframe>
