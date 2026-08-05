@@ -18,7 +18,7 @@
 
   <!-- INTRO VIDEO OVERLAY -->
   <div id="intro-video-overlay" style="position: fixed; inset: 0; background: black; z-index: 99999; display: flex; align-items: center; justify-content: center;">
-    <button id="intro-video-btn" style="width: 100%; height: 100%; background: transparent; border: none; color: #33ff33; font-size: 24px; font-family: 'Courier New', monospace; cursor: pointer;">[ Click to Enter LWK Learning ]</button>
+    <button id="intro-video-btn" onclick="const p=document.getElementById('intro-video-player'); const btn=this; if(p){btn.style.display='none'; p.style.display='block'; p.play().catch(()=>document.getElementById('intro-video-overlay').remove()); p.onended=()=>document.getElementById('intro-video-overlay').remove(); }else{document.getElementById('intro-video-overlay').remove();}" style="width: 100%; height: 100%; background: transparent; border: none; color: #33ff33; font-size: 24px; font-family: 'Courier New', monospace; cursor: pointer;">[ Click to Enter LWK Learning ]</button>
     <video id="intro-video-player" playsinline style="width: 100%; height: 100%; object-fit: contain; display: none;">
       <source src="https://cdn.jsdelivr.net/gh/LWKlearning/LWKlearning.github.io@main/lwklearning%20intro.mp4" type="video/mp4">
     </video>
