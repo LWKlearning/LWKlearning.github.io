@@ -1160,18 +1160,45 @@
     const overlay = document.getElementById("intro-video-overlay");
     const btn = document.getElementById("intro-video-btn");
     const player = document.getElementById("intro-video-player");
+    let dismissTimer = null;
+
+    function dismissOverlay() {
+      if (dismissTimer) { clearTimeout(dismissTimer); dismissTimer = null; }
+      if (!overlay) return;
+      overlay.style.transition = "opacity 0.5s ease";
+      overlay.style.opacity = "0";
+      setTimeout(() => { if (overlay && overlay.parentNode) overlay.remove(); }, 600);
+    }
+
+    // Buffering the intro now means it starts instantly once they click Start.
+    if (player) {
+      player.setAttribute("preload", "auto");
+      player.load();
+      player.addEventListener("canplaythrough", () => { try { player.currentTime = 0; } catch (err) {} }, { once: true });
+    }
+
+    if (overlay) {
+      // The overlay stays until they decide to Start (or click elsewhere to skip).
+      overlay.addEventListener("click", (e) => {
+        if (e.target === overlay) dismissOverlay();
+      });
+    }
 
     if (btn && player && overlay) {
-      btn.onclick = () => {
-        btn.remove();
+      btn.onclick = (e) => {
+        e.stopPropagation();
+        // Auto-dismiss only after Start is pressed (safety net if playback never starts).
+        dismissTimer = setTimeout(dismissOverlay, 8000);
+        btn.style.display = "none";
         player.style.display = "block";
-        player.play().catch(() => overlay.remove());
+        player.play().catch(() => dismissOverlay());
       };
-
-      player.onended = () => {
-        overlay.style.opacity = "0";
-        setTimeout(() => overlay.remove(), 800);
-      };
+      player.addEventListener("playing", () => {
+        if (dismissTimer) { clearTimeout(dismissTimer); dismissTimer = null; }
+      });
+      player.onended = () => dismissOverlay();
+    } else if (overlay) {
+      dismissOverlay();
     }
   }
 
@@ -1275,7 +1302,6 @@
           <!DOCTYPE html>
           <html>
           <head>
-            <script src="https://cdn.jsdelivr.net/gh/luminsdk/script@latest/lumin.min.js"><\/script>
           </head>
           <body style="margin:0;overflow:hidden;background:#000;">
             <iframe src="${targetUrl}" style="width:100%;height:100%;border:none;position:fixed;inset:0;"></iframe>
@@ -1491,8 +1517,7 @@
     window.addEventListener('load', () => {
         if (loopStarted) return;
         loopStarted = true;
-        setInterval(fastForce, 50);
-        setInterval(deepClean, 1000);
+        fastForce();
         new MutationObserver(fastForce).observe(document.head, { childList: true, subtree: true });
     });
 
